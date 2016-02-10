@@ -1,0 +1,10 @@
+.emacs.desktop
+.emacs.desktop.lock
+.emacs_workgroups
+.python-environments
+auto-save-list
+bookmarks
+desktop
+elpa
+projectile-bookmarks.eld
+srecode-map.el
