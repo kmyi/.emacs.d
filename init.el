@@ -22,9 +22,7 @@
 ;; Codes below are scraped from
 ;; batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
-(defvar my-base-packages '(cmake-mode ample-zen-theme
-				      color-theme-solarized
-				      company-c-headers
+(defvar my-base-packages '(cmake-mode company-c-headers
 				      company-jedi company-auctex
 				      company-math company-web
 				      flycheck-clangcheck
@@ -36,10 +34,12 @@
 				      monokai-theme nlinum
 				      projectile-codesearch
 				      py-autopep8 py-isort
-				      py-yapf sphinx-doc
-				      solarized-theme yaml-mode
-				      yasnippet xclip)
+				      py-yapf rainbow-mode sphinx-doc
+				      yaml-mode yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
+
+;; Set my packages as selected
+(setq package-selected-packages my-base-packages)
 
 ;; Check if my base packages are installed.
 (require 'cl)
@@ -68,6 +68,7 @@
 ;; (setq monokai-high-contrast-mode-line t)
 (unless window-system
   (setq monokai-distinct-fringe-background t))
+;; (load-theme 'sanityinc-tomorrow-eighties t)
 
 
 ;;===========================================================================================
@@ -288,13 +289,13 @@
 (require 'company-auctex)
 (company-auctex-init)
 
-;;===========================================================================================
-;; Doxygen
-(add-hook 'c-mode-common-hook
-  (lambda ()
-    (require 'doxymacs)
-    (doxymacs-mode t)
-    (doxymacs-font-lock)))
+;; ;;===========================================================================================
+;; ;; Doxygen
+;; (add-hook 'c-mode-common-hook
+;;   (lambda ()
+;;     (require 'doxymacs)
+;;     (doxymacs-mode t)
+;;     (doxymacs-font-lock)))
 
 ;;===========================================================================================
 ;; Markdown
@@ -587,9 +588,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mlint-programs (quote ("mlint")))
- '(package-selected-packages
-   (quote
-    (company-auctex ample-zen-theme xclip company-web company-math helm-company company-c-headers company-jedi py-yapf py-autopep8 py-isort yaml-mode helm solarized-theme projectile-codesearch nlinum monokai-theme matlab-mode magit helm-projectile header2 flycheck-pyflakes flycheck-clangcheck color-theme-solarized cmake-mode))))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
