@@ -8,13 +8,13 @@
 ;;
 ;;; Code:
 
-;; ----------------------------------------------------------------------------
-;; PACAKGES
+;; ============================================================================
+;; PACKAGES
+;; ============================================================================
 (require 'package)
 (package-initialize)
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-;; list the repositories containing them
+;; list of repositories
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "https://melpa.org/packages/")))
@@ -22,6 +22,7 @@
 ;; Codes below are scraped from
 ;; batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
+;; List of packages to install
 (defvar my-base-packages '(cmake-mode company-c-headers
 				      company-jedi company-auctex
 				      company-math company-web
@@ -60,8 +61,121 @@
 
 (provide 'my-base-packages)
 
+;; ============================================================================
+;; Basic Emacs Settings
+;; ============================================================================
 
-;;===========================================================================================
+;; Text mode and Auto Fill mode
+;; The next two lines put Emacs into Text mode
+;; and Auto Fill mode, and are for writers who
+;; want to start writing prose rather than code.
+(setq-default major-mode 'text-mode)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;; Enable mouse support
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (global-set-key [mouse-4] '(lambda ()
+                              (interactive)
+                              (scroll-down 1)))
+  (global-set-key [mouse-5] '(lambda ()
+                              (interactive)
+                              (scroll-up 1)))
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t)
+)
+
+;; Enable desktop save on exit
+(desktop-save-mode 1)
+
+;; To fix dektop prob
+(setq desktop-restore-frames t)
+(setq desktop-restore-in-current-display t)
+(setq desktop-restore-forces-onscreen nil)
+
+;; Custom function setup to load desktop
+;; (setq desktop-restore-frames nil)
+;; (setq desktop-dirname             "~/.emacs.d/desktop/"
+;;       desktop-base-file-name      "emacs.desktop"
+;;       desktop-base-lock-name      "lock"
+;;       desktop-path                (list desktop-dirname)
+;;       desktop-save                t
+;;       desktop-files-not-to-save   "^$" ;reload tramp paths
+;;       desktop-load-locked-desktop nil)
+
+;; (defun my-desktop ()
+;;   "Load the desktop and enable autosaving"
+;;   (interactive)
+;;   (let ((desktop-load-locked-desktop "ask"))
+;;     (desktop-read)
+;;     (desktop-save-mode 1)))
+
+
+;; Reverting all buffersUnprintable entity
+(defun revert-all-buffers ()
+    "Refreshes all open buffers from their respective files."
+    (interactive)
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (and (buffer-file-name)
+		   (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
+          (revert-buffer t t t) )))
+    (message "Refreshed open files.") )
+
+
+;; This script should get rid of annoying backup files by emacs
+(setq
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.saves"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)       ; use versioned backups
+
+
+;; Disable popup that keeps emacs from strating
+(defadvice yes-or-no-p (around prevent-dialog activate)
+  "Prevent yes-or-no-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))
+(defadvice y-or-n-p (around prevent-dialog-yorn activate)
+  "Prevent y-or-n-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))
+
+;; ============================================================================
+;; Emacs Windows Settings
+;; ============================================================================
+
+;; Disable menu bar and tool bar
+(tool-bar-mode -1)
+(unless window-system
+  (menu-bar-mode -1))
+
+;; Window resizing
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
+;; Enable winner mode
+(winner-mode 1)
+
+;; use shift+arrow to move arround split pane
+(windmove-default-keybindings)
+
+;; Commenting Shortcuts
+(global-set-key (kbd "\C-c;")      'comment-region)
+(global-set-key (kbd "\C-c:")      'uncomment-region)
+(global-set-key (kbd "C-s-<left>")      'ns-prev-frame)
+(global-set-key (kbd "C-s-<right>")      'ns-next-frame)
+
+;; ============================================================================
+;; Themes
+;; ============================================================================
+
 ;; (load-theme 'solarized-dark t)
 
 (load-theme 'monokai t)
@@ -71,9 +185,54 @@
 ;; (load-theme 'sanityinc-tomorrow-eighties t)
 
 
-;;===========================================================================================
+;; ============================================================================
+;; Buffer Cleanup
+;; ============================================================================
+
+;; midnight mode
+(require 'midnight)
+
+;;kill buffers if they were last disabled more than this seconds ago
+(setq clean-buffer-list-delay-general 7) ; will clean after 7 days
+(setq clean-buffer-list-delay-special (* 7 (* 24 3600))) ;basically 7 days
+;; (setq clean-buffer-list-delay-special 2) ;basically 3 days
+
+(defvar clean-buffer-list-timer nil
+  "Stores 'clean-buffer-list timer' if there is one.
+You can disable 'clean-buffer-list' by (cancel-timer
+  clean-buffer-list-timer).")
+
+;; run clean-buffer-list every 2 hours
+(setq clean-buffer-list-timer (run-at-time t 7200 'clean-buffer-list))
+
+;; kill everything, clean-buffer-list is very intelligent at not killing
+;; unsaved buffer.
+(setq clean-buffer-list-kill-regexps '("^.*$"))
+
+;; keep these buffer untouched
+;; prevent append multiple times
+(defvar clean-buffer-list-kill-never-buffer-names-init
+  clean-buffer-list-kill-never-buffer-names
+  "Init value for clean-buffer-list-kill-never-buffer-names.")
+(setq clean-buffer-list-kill-never-buffer-names
+      (append
+       '("*Messages*" "*scratch*")
+       clean-buffer-list-kill-never-buffer-names-init))
+
+;; prevent append multiple times
+(defvar clean-buffer-list-kill-never-regexps-init
+  clean-buffer-list-kill-never-regexps
+  "Init value for clean-buffer-list-kill-never-regexps.")
+;; append to *-init instead of itself
+(setq clean-buffer-list-kill-never-regexps
+      (append '(".*\.init.el.*" ".*helm.*")
+	      clean-buffer-list-kill-never-regexps-init))
+
+
+;; ============================================================================
 ;; HELM
-;; (add-to-list 'load-path "~/Dropbox/emacs_stuff/helm")
+;; ============================================================================
+
 (require 'helm-config)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
@@ -107,143 +266,10 @@
 ;;      (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 ;;      (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)))
 
-;;===========================================================================================
-;; BASIC  STUFF THAT YOU DON'T NEED TO CHANGE
-
-;;; Text mode and Auto Fill mode
-     ;; The next two lines put Emacs into Text mode
-     ;; and Auto Fill mode, and are for writers who
-     ;; want to start writing prose rather than code.
-
-(setq-default major-mode 'text-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-
-;; Enable mouse support
-
-(unless window-system
-  (require 'mouse)
-  (xterm-mouse-mode t)
-  (global-set-key [mouse-4] '(lambda ()
-                              (interactive)
-                              (scroll-down 1)))
-  (global-set-key [mouse-5] '(lambda ()
-                              (interactive)
-                              (scroll-up 1)))
-  (defun track-mouse (e))
-  (setq mouse-sel-mode t)
-)
-
-;; Window resizing
-(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "S-C-<down>") 'shrink-window)
-(global-set-key (kbd "S-C-<up>") 'enlarge-window)
-
-;; Enable winner mode
-(winner-mode 1)
-
-;; use shift+arrow to move arround split pane
-(windmove-default-keybindings)
-
-
-;; Commenting Shortcuts
-(global-set-key (kbd "\C-c;")      'comment-region)
-(global-set-key (kbd "\C-c:")      'uncomment-region)
-(global-set-key (kbd "C-s-<left>")      'ns-prev-frame)
-(global-set-key (kbd "C-s-<right>")      'ns-next-frame)
-
-
-;; Enable desktop save on exit
-(desktop-save-mode 1)
-;; (setq desktop-restore-frames nil)
-;; (setq desktop-dirname             "~/.emacs.d/desktop/"
-;;       desktop-base-file-name      "emacs.desktop"
-;;       desktop-base-lock-name      "lock"
-;;       desktop-path                (list desktop-dirname)
-;;       desktop-save                t
-;;       desktop-files-not-to-save   "^$" ;reload tramp paths
-;;       desktop-load-locked-desktop nil)
-
-;; To fix dektop prob
-(setq desktop-restore-frames t)
-(setq desktop-restore-in-current-display t)
-(setq desktop-restore-forces-onscreen nil)
-
-;; ;; Custom function to load desktop
-;; (defun my-desktop ()
-;;   "Load the desktop and enable autosaving"
-;;   (interactive)
-;;   (let ((desktop-load-locked-desktop "ask"))
-;;     (desktop-read)
-;;     (desktop-save-mode 1)))
-
-
-;; Reverting all buffersUnprintable entity
-(defun revert-all-buffers ()
-    "Refreshes all open buffers from their respective files."
-    (interactive)
-    (dolist (buf (buffer-list))
-      (with-current-buffer buf
-        (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
-          (revert-buffer t t t) )))
-    (message "Refreshed open files.") )
-
-
-;; ========== BUFFER CLEANUP  ==========
-;;; midnight mode
-(require 'midnight)
-
-;;kill buffers if they were last disabled more than this seconds ago
-(setq clean-buffer-list-delay-general 7) ; will clean after 7 days
-(setq clean-buffer-list-delay-special (* 7 (* 24 3600))) ;basically 7 days
-;; (setq clean-buffer-list-delay-special 2) ;basically 3 days
-
-(defvar clean-buffer-list-timer nil
-  "Stores clean-buffer-list timer if there is one. You can disable clean-buffer-list by (cancel-timer clean-buffer-list-timer).")
-
-;; run clean-buffer-list every 2 hours
-(setq clean-buffer-list-timer (run-at-time t 7200 'clean-buffer-list))
-
-;; kill everything, clean-buffer-list is very intelligent at not killing
-;; unsaved buffer.
-(setq clean-buffer-list-kill-regexps '("^.*$"))
-
-;; keep these buffer untouched
-;; prevent append multiple times
-(defvar clean-buffer-list-kill-never-buffer-names-init
-  clean-buffer-list-kill-never-buffer-names
-  "Init value for clean-buffer-list-kill-never-buffer-names")
-(setq clean-buffer-list-kill-never-buffer-names
-      (append
-       '("*Messages*" "*scratch*")
-       clean-buffer-list-kill-never-buffer-names-init))
-
-;; prevent append multiple times
-(defvar clean-buffer-list-kill-never-regexps-init
-  clean-buffer-list-kill-never-regexps
-  "Init value for clean-buffer-list-kill-never-regexps")
-;; append to *-init instead of itself
-(setq clean-buffer-list-kill-never-regexps
-      (append '(".*\.init.el.*" ".*helm.*")
-	      clean-buffer-list-kill-never-regexps-init))
-
-;; ============= Backup Stuff=================
-;; This script should get rid of annoying backup files by emacs
-(setq
- backup-by-copying t      ; don't clobber symlinks
- backup-directory-alist
- '(("." . "~/.saves"))    ; don't litter my fs tree
- delete-old-versions t
- kept-new-versions 6
- kept-old-versions 2
- version-control t)       ; use versioned backups
-
-;; END OF BASICS
-;;===========================================================================================
-
-
-;;===========================================================================================
+;; ============================================================================
 ;; Enable Line and Column Numbering
+;; ============================================================================
+
 ;; use nlinum instead as linum is slugish
 (require 'nlinum)
 (global-nlinum-mode t)
@@ -255,24 +281,16 @@
 (unless window-system
   (setq nlinum-format "%d "))
 
-;;===========================================================================================
+;; ============================================================================
 ;; Auto Headers
+;; ============================================================================
 (require 'header2)
 (autoload 'auto-update-file-header "header2")
 (add-hook 'write-file-hooks 'auto-update-file-header)
- 
-;; ;;===========================================================================================
-;; ;; Auto Complete
-;; (require 'auto-complete)
-;; (global-auto-complete-mode t)
-;; (defun auto-complete-mode-maybe ()
-;;   "No maybe for you. Only AC!"
-;;   (unless (minibufferp (current-buffer))
-;;     (auto-complete-mode 1)))
 
-
-;;===========================================================================================
+;; ============================================================================
 ;; Company
+;; ============================================================================
 (require 'company)
 ;; Basic usage
 (add-to-list 'company-backends 'company-jedi)
@@ -289,22 +307,15 @@
 (require 'company-auctex)
 (company-auctex-init)
 
-;; ;;===========================================================================================
-;; ;; Doxygen
-;; (add-hook 'c-mode-common-hook
-;;   (lambda ()
-;;     (require 'doxymacs)
-;;     (doxymacs-mode t)
-;;     (doxymacs-font-lock)))
-
-;;===========================================================================================
+;; ============================================================================
 ;; Markdown
+;; ============================================================================
 (require 'markdown-mode)
 (add-hook 'markdown-mode-hook (lambda () (setq-local default-justification (quote full))))
 
-
-;;===========================================================================================
+;; ============================================================================
 ;; AUC Tex Related
+;; ============================================================================
 (require 'tex-site)
 (require 'tex)
 
@@ -347,15 +358,18 @@
 (setq TeX-view-program-list
      '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
 
-;;===========================================================================================
-;; ispell related 
+;; ============================================================================
+;; ispell
+;; ============================================================================
 (setq ispell-program-name "/usr/local/bin/ispell")
 
-;;===========================================================================================
-;; magit
+;; ============================================================================
+;; Magit
+;; ============================================================================
+
 ;; (setq magit-display-buffer-function (quote display-buffer)) ;buffer display settings
 ;; (setq magit-status-buffer-switch-function 'switch-to-buffer) ;magit settings
-(setq magit-push-always-verify nil)			     ;set no prompt for push verification
+(setq magit-push-always-verify nil)	     ;set no prompt for push verification
 
 ;; for magit status
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -363,16 +377,18 @@
 ;; for displaying popups
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
-;;==================================================================================
-;; fly check
+;; ============================================================================
+;; Fly check
+;; ============================================================================
 (require 'flycheck)
 (add-hook 'after-init-hook 'global-flycheck-mode) 
 (eval-after-load 'flycheck
   '(define-key flycheck-mode-map (kbd "C-x /") 'helm-flycheck))
 
 
-;;==================================================================================
+;; ============================================================================
 ;; CPP and C
+;; ============================================================================
 (defun my-c-mode-common-hook ()
   (setq c-default-style "linux"
 	c-basic-offset 4)
@@ -392,8 +408,7 @@
 
 ;; Hooks for C
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-;; (add-hook 'c-mode-common-hook 'auto-complete-mode)
-
+(add-hook 'c-mode-common-hook 'auto-make-header)  ; Autoinsert header for C
 (add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))
 
 ;; for long funciton names
@@ -414,7 +429,6 @@
 (add-hook 'c-mode-common-hook 'my-indent-setup)
 
 (add-hook 'c-mode-common-hook 'turn-on-auto-fill) ; Autofill for C
-(add-hook 'c-mode-common-hook 'auto-make-header)  ; Autoinsert header for C
 
 
 ;; Auto-indent using external program
@@ -442,18 +456,21 @@
 	  (lambda ()
 	    (define-key c-mode-base-map [f7] 'c-reformat-buffer)))
 
-;;===========================================================================================
+;; ============================================================================
 ;; MATLAB
-;; (add-hook 'matlab-mode-hook 'auto-complete-mode) ; Enable auto-complete for matlab
+;; ============================================================================
+
 (add-hook 'matlab-mode-hook 'auto-make-header)	 ; Enable auto-make-header for matlab
+;; (add-hook 'matlab-mode-hook 'auto-complete-mode) ; Enable auto-complete for matlab
 
 ;; (add-hook 'matlab-mode-hook (lambda ()
 ;; 			      (define-key matlab-mode-map "\C-c;" 'comment-region)
 ;; 			      (define-key matlab-mode-map "\C-c:" 'uncomment-region)
 ;; 			      (define-key matlab-mode-map "M-;" 'comment-dwim)))
 
-;;===========================================================================================
+;; ============================================================================
 ;; PYTHON
+;; ============================================================================
 (require 'python)
 (add-hook 'python-mode-hook 'auto-make-header)	 ; Enable auto-make-header for python
 
@@ -473,9 +490,6 @@
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
                               (sphinx-doc-mode t)))
-
-;; =============================
-;; Code Editing
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode) ; enable the jedi!
@@ -502,84 +516,15 @@
             (local-set-key (kbd "C-c i")
                            'py-isort-buffer)))
 
-
-;;======================disable Popup====================
-(defadvice yes-or-no-p (around prevent-dialog activate)
-  "Prevent yes-or-no-p from activating a dialog"
-  (let ((use-dialog-box nil))
-    ad-do-it))
-(defadvice y-or-n-p (around prevent-dialog-yorn activate)
-  "Prevent y-or-n-p from activating a dialog"
-  (let ((use-dialog-box nil))
-    ad-do-it))
-
-;; ======================================================================
-;; Disable menu bar and tool bar
-(tool-bar-mode -1)
-(unless window-system
-  (menu-bar-mode -1))
-
-
-;;===========================================================================================
+;; ============================================================================
 ;; CMAKE
-; Add cmake listfile names to the mode list.
+;; ============================================================================
+;; Add cmake listfile names to the mode list.
 (setq auto-mode-alist
 	  (append
 	   '(("CMakeLists\\.txt\\'" . cmake-mode))
 	   '(("\\.cmake\\'" . cmake-mode))
 	   auto-mode-alist))
-
-
-;; ;; ======================================================================
-;; ;; Workgroup
-
-;; ;; save all open buffer list using desktop mode, but don't save frames
-;; (desktop-save-mode 1)
-;; (setq desktop-restore-frames nil)
-;; (setq desktop-restore-in-current-display nil)
-;; (setq desktop-restore-forces-onscreen nil)
-;; (setq desktop-restore-eager 10)
-
-;; (require 'workgroups2)
-;; ;; Your settings here
-
-;; ;; What to do on Emacs exit / workgroups-mode exit?
-;; (setq wg-emacs-exit-save-behavior           'save)      ; Options: 'save 'ask nil
-;; (setq wg-workgroups-mode-exit-save-behavior 'save)      ; Options: 'save 'ask nil
-
-;; ;; Mode Line changes
-;; ;; Display workgroups in Mode Line?
-;; (setq wg-mode-line-display-on t)          ; Default: (not (featurep 'powerline))
-;; (setq wg-flag-modified t)                 ; Display modified flags as well
-;; (setq wg-mode-line-decor-left-brace "["
-;;       wg-mode-line-decor-right-brace "]"  ; how to surround it
-;;       wg-mode-line-decor-divider ":")
-
-;; ;;(setq wg-session-load-on-start t)    ; default: (not (daemonp))
-
-;; ;; Change prefix key (before activating WG)
-;; (setq wg-prefix-key (kbd "C-c a"))
-
-;; ;; Restore associated
-;; (setq wg-restore-associated-buffers t)
-
-;; ;; Change workgroups session file
-;; (setq wg-session-file "~/.emacs.d/.emacs_workgroups")
-
-;; ;; Try to laod this
-;; (setq wg-open-this-wg "~/.emacs.d/.emacs_workgroups")
-
-;; ;; Set your own keyboard shortcuts to reload/save/switch WGs:
-;; ;; "s" == "Super" or "Win"-key, "S" == Shift, "C" == Control
-;; ;; (global-set-key (kbd "<pause>")     'wg-reload-session)
-;; ;; (global-set-key (kbd "C-S-<pause>") 'wg-save-session)
-;; ;; (global-set-key (kbd "s-z")         'wg-switch-to-workgroup)
-;; ;; (global-set-key (kbd "s-/")         'wg-switch-to-previous-workgroup)
-;; (global-set-key (kbd "M-s-<right>")         'wg-switch-to-workgroup-right)
-;; (global-set-key (kbd "M-s-<left>")         'wg-switch-to-workgroup-left)
-
-;; (workgroups-mode 1)   ; put this one at the bottom of .emacs
-
 
 
 (custom-set-variables
