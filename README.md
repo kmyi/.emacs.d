@@ -27,6 +27,9 @@ You need to pip install the following to be safe
 
 > pip install environments --user
 
+For mac-print-mode, you need to do the following instructions
+
+[https://www.emacswiki.org/emacs/MacPrintMode](https://www.emacswiki.org/emacs/MacPrintMode)
 
 TODO
 -------------------------------------------------------------------------------

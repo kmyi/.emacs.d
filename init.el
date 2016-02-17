@@ -30,13 +30,14 @@
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
-				      helm-flycheck magit
+				      helm-flycheck htmlize magit
 				      matlab-mode markdown-mode
 				      monokai-theme nlinum
 				      projectile-codesearch
 				      py-autopep8 py-isort
-				      py-yapf rainbow-mode sphinx-doc
-				      yaml-mode yasnippet xclip)
+				      py-yapf rainbow-mode
+				      sphinx-doc yaml-mode
+				      yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
 ;; Set my packages as selected
@@ -60,6 +61,14 @@
       (package-install p))))
 
 (provide 'my-base-packages)
+
+;; Printing
+(add-to-list 'load-path "~/.emacs.d/")
+(load "mac-print-mode.el")
+
+(when (require 'mac-print-mode nil t)
+  (mac-print-mode 1)
+  (global-set-key (kbd "M-p") 'mac-print-buffer))
 
 ;; ============================================================================
 ;; Basic Emacs Settings
