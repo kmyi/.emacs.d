@@ -164,16 +164,16 @@
 (winner-mode 1)
 
 ;; use Commend+Shift+Super + arrow to move arround split pane
-(global-set-key (kbd "C-S-s-<left>")      'windmove-left)
-(global-set-key (kbd "C-S-s-<right>")      'windmove-right)
-(global-set-key (kbd "C-S-s-<up>")      'windmove-up)
-(global-set-key (kbd "C-S-s-<down>")      'windmove-down)
+(global-set-key (kbd "M-S-<left>")      'windmove-left)
+(global-set-key (kbd "M-S-<right>")      'windmove-right)
+(global-set-key (kbd "M-S-<up>")      'windmove-up)
+(global-set-key (kbd "M-S-<down>")      'windmove-down)
 
 ;; Commenting Shortcuts
 (global-set-key (kbd "\C-c;")      'comment-region)
 (global-set-key (kbd "\C-c:")      'uncomment-region)
-(global-set-key (kbd "C-M-s-<left>")      'ns-prev-frame)
-(global-set-key (kbd "C-M-s-<right>")      'ns-next-frame)
+(global-set-key (kbd "C-s-<left>")      'ns-prev-frame)
+(global-set-key (kbd "C-s-<right>")      'ns-next-frame)
 
 ;; ============================================================================
 ;; Themes
