@@ -63,7 +63,7 @@
 (provide 'my-base-packages)
 
 ;; Printing
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/non-elpa/")
 (load "mac-print-mode.el")
 
 (when (require 'mac-print-mode nil t)
