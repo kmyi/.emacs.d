@@ -172,8 +172,8 @@
 ;; Commenting Shortcuts
 (global-set-key (kbd "\C-c;")      'comment-region)
 (global-set-key (kbd "\C-c:")      'uncomment-region)
-(global-set-key (kbd "C-s-<left>")      'ns-prev-frame)
-(global-set-key (kbd "C-s-<right>")      'ns-next-frame)
+(global-set-key (kbd "C-M-s-<left>")      'ns-prev-frame)
+(global-set-key (kbd "C-M-s-<right>")      'ns-next-frame)
 
 ;; ============================================================================
 ;; Themes
