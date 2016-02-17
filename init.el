@@ -163,8 +163,11 @@
 ;; Enable winner mode
 (winner-mode 1)
 
-;; use shift+arrow to move arround split pane
-(windmove-default-keybindings)
+;; use Commend+Shift+Super + arrow to move arround split pane
+(global-set-key (kbd "C-S-s-<left>")      'windmove-left)
+(global-set-key (kbd "C-S-s-<right>")      'windmove-right)
+(global-set-key (kbd "C-S-s-<up>")      'windmove-up)
+(global-set-key (kbd "C-S-s-<down>")      'windmove-down)
 
 ;; Commenting Shortcuts
 (global-set-key (kbd "\C-c;")      'comment-region)
