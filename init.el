@@ -297,6 +297,49 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (autoload 'auto-update-file-header "header2")
 (add-hook 'write-file-hooks 'auto-update-file-header)
 
+;; Change copyright notice to my lab
+(setq header-copyright-notice "Copyright (C), EPFL Computer Vision Lab.\n")
+
+;; Header stylings
+(setq make-header-hook '(
+			 ;;header-mode-line
+			 header-title
+			 header-blank
+			 header-file-name
+			 header-description
+			 ;; header-status
+			 header-author
+			 header-maintainer
+			 header-creation-date
+			 ;; header-rcs-id
+			 header-version
+			 header-pkg-requires
+			 ;; header-sccs
+			 ;; header-modification-date
+			 ;; header-modification-author
+			 ;; header-update-count
+			 header-url
+			 header-doc-url
+			 header-keywords
+			 header-compatibility
+			 header-blank
+			 header-lib-requires
+			 header-end-line
+			 header-commentary
+			 header-blank
+			 header-blank
+			 header-blank
+			 header-end-line
+			 header-history
+			 header-blank
+			 header-blank
+			 ;; header-rcs-log
+			 header-end-line
+			 header-copyright
+			 ;; header-free-software
+			 header-code
+			 header-eof
+			 ))
 ;; ============================================================================
 ;; Company
 ;; ============================================================================
