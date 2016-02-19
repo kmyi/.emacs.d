@@ -65,6 +65,7 @@
 ;; Printing
 (add-to-list 'load-path "~/.emacs.d/non-elpa/")
 (load "mac-print-mode.el")
+(load "my-monokai-theme.el")
 
 (when (require 'mac-print-mode nil t)
   (mac-print-mode 1)
@@ -187,10 +188,10 @@
 
 ;; (load-theme 'solarized-dark t)
 
-(load-theme 'monokai t)
+(load-theme 'my-monokai t)
 ;; (setq monokai-high-contrast-mode-line t)
 (unless window-system
-  (setq monokai-distinct-fringe-background t))
+  (setq my-monokai-distinct-fringe-background t))
 ;; (load-theme 'sanityinc-tomorrow-eighties t)
 
 
