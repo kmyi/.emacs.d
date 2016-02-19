@@ -586,7 +586,17 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mlint-programs (quote ("mlint")))
- )
+ '(safe-local-variable-values
+   (quote
+    ((eval when
+	   (fboundp
+	    (quote aggressive-indent-mode))
+	   (aggressive-indent-mode -1))
+     (eval when
+	   (fboundp
+	    (quote rainbow-mode))
+	   (rainbow-mode 1))
+     (header-auto-update-enabled)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
