@@ -164,10 +164,10 @@
   (menu-bar-mode -1))
 
 ;; Window resizing
-(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "S-C-<down>") 'shrink-window)
-(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+(global-set-key (kbd "C-M-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-M-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-M-<down>") 'shrink-window)
+(global-set-key (kbd "C-M-<up>") 'enlarge-window)
 
 ;; Enable winner mode
 (winner-mode 1)
@@ -178,8 +178,8 @@
 ;; Commenting Shortcuts
 (global-set-key (kbd "\C-c;")      'comment-region)
 (global-set-key (kbd "\C-c:")      'uncomment-region)
-(global-set-key (kbd "C-s-<left>")      'ns-prev-frame)
-(global-set-key (kbd "C-s-<right>")      'ns-next-frame)
+(global-set-key (kbd "C-S-<left>")      'ns-prev-frame)
+(global-set-key (kbd "C-S-<right>")      'ns-next-frame)
 
 ;; ============================================================================
 ;; Themes
