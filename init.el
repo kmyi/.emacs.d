@@ -65,7 +65,6 @@
 ;; Printing
 (add-to-list 'load-path "~/.emacs.d/non-elpa/")
 (load "mac-print-mode.el")
-(load "my-monokai-theme.el")
 
 (when (require 'mac-print-mode nil t)
   (mac-print-mode 1)
@@ -147,11 +146,11 @@
 
 ;; Disable popup that keeps emacs from strating
 (defadvice yes-or-no-p (around prevent-dialog activate)
-  "Prevent yes-or-no-p from activating a dialog"
+  "Prevent 'yes-or-no-p' from activating a dialog."
   (let ((use-dialog-box nil))
     ad-do-it))
 (defadvice y-or-n-p (around prevent-dialog-yorn activate)
-  "Prevent y-or-n-p from activating a dialog"
+  "Prevent 'y-or-n-p' from activating a dialog."
   (let ((use-dialog-box nil))
     ad-do-it))
 
@@ -163,6 +162,9 @@
 (tool-bar-mode -1)
 (unless window-system
   (menu-bar-mode -1))
+
+;; Scroll bars are simply annoying... don't really help
+(scroll-bar-mode -1)
 
 ;; Window resizing
 (global-set-key (kbd "C-M-<left>") 'shrink-window-horizontally)
@@ -188,10 +190,9 @@
 
 ;; (load-theme 'solarized-dark t)
 
+(load "my-monokai-theme.el")
 (load-theme 'my-monokai t)
-;; (setq monokai-high-contrast-mode-line t)
-(unless window-system
-  (setq my-monokai-distinct-fringe-background t))
+
 ;; (load-theme 'sanityinc-tomorrow-eighties t)
 
 

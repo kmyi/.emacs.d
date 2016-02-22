@@ -60,9 +60,14 @@
 The theme has to be reloaded after changing anything in this group."
   :group 'faces)
 
+(defcustom my-monokai-distinct-linum-background nil
+  "Make the 'linum-mode' background different from the normal background color."
+  :type 'boolean
+  :group 'my-monokai)
+
 (defcustom my-monokai-distinct-fringe-background nil
   "Make the fringe background different from the normal background color.
-Also affects 'linum-mode' background."
+Nolonger affects 'linum-mode' background."
   :type 'boolean
   :group 'my-monokai)
 
@@ -161,6 +166,8 @@ Also affects 'linum-mode' background."
        ;; customize based face properties
        (s-variable-pitch         (if my-monokai-use-variable-pitch
                                      'variable-pitch 'default))
+       (s-linum-bg               (if my-monokai-distinct-linum-background
+                                     my-monokai-hl my-monokai-bg))
        (s-fringe-bg              (if my-monokai-distinct-fringe-background
                                      my-monokai-hl my-monokai-bg))
        (s-mode-line-fg           (if my-monokai-high-contrast-mode-line
@@ -247,6 +254,8 @@ Also affects 'linum-mode' background."
        ;; customize based face properties
        (terminal-s-variable-pitch         (if my-monokai-use-variable-pitch
                                               'variable-pitch 'default))
+       (terminal-s-linum-bg              (if my-monokai-distinct-linum-background
+                                              terminal-my-monokai-hl terminal-my-monokai-bg))
        (terminal-s-fringe-bg              (if my-monokai-distinct-fringe-background
                                               terminal-my-monokai-hl terminal-my-monokai-bg))
        (terminal-s-mode-line-fg           (if my-monokai-high-contrast-mode-line
@@ -2978,9 +2987,9 @@ Also affects 'linum-mode' background."
    ;; linum-mode
    `(linum
      ((,class (:foreground ,my-monokai-comments
-                           :background ,s-fringe-bg))
+                           :background ,s-linum-bg))
       (,terminal-class (:foreground ,terminal-my-monokai-comments
-                                    :background ,terminal-s-fringe-bg))))
+                                    :background ,terminal-s-linum-bg))))
 
    ;; lusty-explorer
    `(lusty-directory-face
