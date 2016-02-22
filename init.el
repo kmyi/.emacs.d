@@ -96,6 +96,7 @@
 )
 
 ;; Enable desktop save on exit
+(require 'desktop)
 (desktop-save-mode 1)
 
 ;; To fix dektop prob
@@ -252,6 +253,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (setq helm-split-window-in-side-p t) ;; set helm to always popup below
 
 ;; support for projectile
+(require 'projectile)
 (projectile-global-mode)
 ;; (setq projectile-enable-caching nil)
 (setq projectile-completion-system 'helm)
@@ -415,11 +417,13 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; ============================================================================
 ;; ispell
 ;; ============================================================================
+(require 'ispell)
 (setq ispell-program-name "/usr/local/bin/ispell")
 
 ;; ============================================================================
 ;; Magit
 ;; ============================================================================
+(require 'magit)
 
 ;; (setq magit-display-buffer-function (quote display-buffer)) ;buffer display settings
 ;; (setq magit-status-buffer-switch-function 'switch-to-buffer) ;magit settings
@@ -604,3 +608,6 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init)
+;;; init.el ends here
