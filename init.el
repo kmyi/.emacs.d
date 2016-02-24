@@ -99,7 +99,7 @@
 (require 'desktop)
 (desktop-save-mode 1)
 
-;; To fix dektop prob
+;; Restore frames as well
 (setq desktop-restore-frames t)
 (setq desktop-restore-in-current-display t)
 (setq desktop-restore-forces-onscreen nil)
@@ -154,6 +154,10 @@
   "Prevent 'y-or-n-p' from activating a dialog."
   (let ((use-dialog-box nil))
     ad-do-it))
+
+;; do not close newly open buffers when exiting emacsclient
+(setq server-kill-new-buffers nil)
+
 
 ;; ============================================================================
 ;; Emacs Windows Settings
