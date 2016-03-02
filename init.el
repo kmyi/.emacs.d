@@ -100,8 +100,8 @@
 (desktop-save-mode 1)
 
 ;; Restore frames as well
-(setq desktop-restore-frames t)
-(setq desktop-restore-in-current-display t)
+(setq desktop-restore-frames nil)
+(setq desktop-restore-in-current-display nil)
 (setq desktop-restore-forces-onscreen nil)
 
 ;; Custom function setup to load desktop
