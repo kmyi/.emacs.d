@@ -36,7 +36,8 @@
 				      projectile-codesearch
 				      py-autopep8 py-isort
 				      py-yapf rainbow-mode
-				      sphinx-doc yaml-mode
+				      sphinx-doc
+				      virtualenvwrapper yaml-mode
 				      yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
@@ -348,6 +349,15 @@ You can disable 'clean-buffer-list' by (cancel-timer
 			 header-code
 			 header-eof
 			 ))
+
+;; ============================================================================
+;; Virtualenvwrapper
+;; ============================================================================
+(require 'virtualenvwrapper)
+(venv-initialize-interactive-shells) ;; if you want interactive shell support
+(venv-initialize-eshell) ;; if you want eshell support
+(setq venv-location "~/Envs/")
+
 ;; ============================================================================
 ;; Company
 ;; ============================================================================
