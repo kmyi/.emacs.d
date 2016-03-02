@@ -34,10 +34,9 @@
 				      matlab-mode markdown-mode
 				      monokai-theme nlinum
 				      projectile-codesearch
-				      py-autopep8 py-isort
+				      py-autopep8 py-isort pyvenv
 				      py-yapf rainbow-mode
-				      sphinx-doc
-				      virtualenvwrapper yaml-mode
+				      sphinx-doc yaml-mode
 				      yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
@@ -351,14 +350,6 @@ You can disable 'clean-buffer-list' by (cancel-timer
 			 ))
 
 ;; ============================================================================
-;; Virtualenvwrapper
-;; ============================================================================
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells) ;; if you want interactive shell support
-(venv-initialize-eshell) ;; if you want eshell support
-(setq venv-location "~/Envs/")
-
-;; ============================================================================
 ;; Company
 ;; ============================================================================
 (require 'company)
@@ -549,6 +540,15 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i")
 
+;; For python-environment
+(require 'python-environment)
+(setq python-environment-default-root-name "default")
+(setq python-environment-directory "~/Envs")
+;; (setq python-environment-virtualenv '("virtualenv" "--quiet"))
+
+;; For pyvenv
+(require 'pyvenv)
+
 (add-hook 'python-mode-hook 'jedi:setup) ; enable the jedi!
 ;; (add-hook 'python-mode-hook
 ;;           (lambda ()
@@ -605,6 +605,9 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mlint-programs (quote ("mlint")))
+ '(package-selected-packages
+   (quote
+    (pyvenv cmake-mode company-c-headers company-jedi company-auctex company-math company-web flycheck-clangcheck flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort py-yapf rainbow-mode sphinx-doc yaml-mode yasnippet xclip)))
  '(safe-local-variable-values
    (quote
     ((eval when
