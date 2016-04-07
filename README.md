@@ -15,8 +15,6 @@ Usage
 
 You need to pip install the following to be safe
 
-> pip install jedi --user
-
 > pip insatll autopep8 --user
 
 > pip install isort --user
@@ -34,5 +32,4 @@ For mac-print-mode, you need to do the following instructions
 TODO
 -------------------------------------------------------------------------------
 
-* Full justification on more major-modes
 * Python docstrings screwup fix
