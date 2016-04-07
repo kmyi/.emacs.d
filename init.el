@@ -23,9 +23,11 @@
 ;; batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
 
 ;; List of packages to install
-(defvar my-base-packages '(cmake-mode company-c-headers
-				      company-jedi company-auctex
-				      company-math company-web
+(defvar my-base-packages '(anaconda-mode cmake-mode
+				      company-c-headers
+				      company-anaconda
+				      company-auctex company-math
+				      company-web
 				      flycheck-clangcheck
 				      flycheck-pyflakes header2
 				      helm helm-company
@@ -354,7 +356,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; ============================================================================
 (require 'company)
 ;; Basic usage
-(add-to-list 'company-backends 'company-jedi)
+;; (add-to-list 'company-backends 'company-jedi)
 ;; ;; Advanced usage
 ;; (add-to-list 'company-backends '(company-jedi company-files))
 (eval-after-load 'company
@@ -362,11 +364,18 @@ You can disable 'clean-buffer-list' by (cancel-timer
      (define-key company-mode-map (kbd "C-:") 'helm-company)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
+;; anaconda backendB
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-anaconda))
+
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; AUCtex plugin for Company
 (require 'company-auctex)
 (company-auctex-init)
+
+;; Make Company case sensitive
+(setq company-dabbrev-downcase nil)
 
 ;; ============================================================================
 ;; Markdown
@@ -549,14 +558,17 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; For pyvenv
 (require 'pyvenv)
 
-(add-hook 'python-mode-hook 'jedi:setup) ; enable the jedi!
+;; Anaconda mode
+(add-hook 'python-mode-hook 'anaconda-mode)
+
+;; (add-hook 'python-mode-hook 'jedi:setup) ; enable the jedi!
+;; ;; (add-hook 'python-mode-hook
+;; ;;           (lambda ()
+;; ;;             (local-unset-key (kbd "<backtab>"))))
 ;; (add-hook 'python-mode-hook
 ;;           (lambda ()
-;;             (local-unset-key (kbd "<backtab>"))))
-(add-hook 'python-mode-hook
-          (lambda ()
-            (local-set-key (kbd "<backtab>")
-                           'company-jedi)))
+;;             (local-set-key (kbd "<backtab>")
+;;                            'company-jedi)))
 
 ;; Sphinx documentation helper
 (add-hook 'python-mode-hook (lambda ()
@@ -564,7 +576,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
                               (sphinx-doc-mode t)))
 
 (require 'flycheck)
-(add-hook 'python-mode-hook 'flycheck-mode) ; enable the jedi!
+(add-hook 'python-mode-hook 'flycheck-mode)
 (setq flycheck-checker-error-threshold 2000) ; set flycheck limit to large value
 
 (require 'py-autopep8)
@@ -604,21 +616,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(mlint-programs (quote ("mlint")))
- '(package-selected-packages
-   (quote
-    (pyvenv cmake-mode company-c-headers company-jedi company-auctex company-math company-web flycheck-clangcheck flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort py-yapf rainbow-mode sphinx-doc yaml-mode yasnippet xclip)))
- '(safe-local-variable-values
-   (quote
-    ((eval when
-	   (fboundp
-	    (quote aggressive-indent-mode))
-	   (aggressive-indent-mode -1))
-     (eval when
-	   (fboundp
-	    (quote rainbow-mode))
-	   (rainbow-mode 1))
-     (header-auto-update-enabled)))))
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
