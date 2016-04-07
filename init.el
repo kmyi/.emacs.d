@@ -38,7 +38,7 @@
 				      projectile-codesearch
 				      py-autopep8 py-isort pyvenv
 				      py-yapf rainbow-mode
-				      sphinx-doc yaml-mode
+				      yaml-mode
 				      yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
@@ -561,6 +561,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 ;; Anaconda mode
 (add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 ;; (add-hook 'python-mode-hook 'jedi:setup) ; enable the jedi!
 ;; ;; (add-hook 'python-mode-hook
@@ -570,11 +571,6 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;;           (lambda ()
 ;;             (local-set-key (kbd "<backtab>")
 ;;                            'company-jedi)))
-
-;; Sphinx documentation helper
-(add-hook 'python-mode-hook (lambda ()
-                              (require 'sphinx-doc)
-                              (sphinx-doc-mode t)))
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
