@@ -82,6 +82,7 @@
 ;; want to start writing prose rather than code.
 (setq-default major-mode 'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
+(setq-default fill-column 79)
 
 ;; Enable mouse support
 (unless window-system
@@ -102,8 +103,8 @@
 (desktop-save-mode 1)
 
 ;; Restore frames as well
-(setq desktop-restore-frames t)
-(setq desktop-restore-in-current-display t)
+(setq desktop-restore-frames nil)
+(setq desktop-restore-in-current-display nil)
 (setq desktop-restore-forces-onscreen nil)
 
 ;; Custom function setup to load desktop
@@ -404,8 +405,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 
-;; set default justification as full for latex mode
-(add-hook 'LaTeX-mode-hook (lambda () (setq-local default-justification (quote full))))
+;; ;; set default justification as full for latex mode
+;; (add-hook 'LaTeX-mode-hook (lambda () (setq-local default-justification (quote full))))
 
 (add-hook 'LaTex-mode-hook '(lambda ()
                              (auto-fill-mode 1)))
