@@ -107,15 +107,20 @@
 (setq desktop-restore-in-current-display nil)
 (setq desktop-restore-forces-onscreen nil)
 
-;; Custom function setup to load desktop
-;; (setq desktop-restore-frames nil)
-;; (setq desktop-dirname             "~/.emacs.d/desktop/"
-;;       desktop-base-file-name      "emacs.desktop"
-;;       desktop-base-lock-name      "lock"
-;;       desktop-path                (list desktop-dirname)
-;;       desktop-save                t
-;;       desktop-files-not-to-save   "^$" ;reload tramp paths
-;;       desktop-load-locked-desktop nil)
+;; Other desktop settings
+(setq desktop-dirname             "~/.emacs.d/desktop/"
+      desktop-path                (list desktop-dirname)
+      desktop-files-not-to-save   "^$" ;reload tramp paths
+      desktop-load-locked-desktop nil)
+
+;; Desktop file depending on HOSTNAME
+(if (eq (string-match "\\." (getenv "HOSTNAME")) nil)
+    ;; desktop for the servers
+    (setq desktop-base-file-name (concat "emacs." (getenv "HOSTNAME") ".desktop")
+	  desktop-base-lock-name (concat "emacs." (getenv "HOSTNAME") ".desktop.lock"))
+  ;; deskstop for my system (local)
+  (setq desktop-base-file-name "emacs.local.desktop"
+	desktop-base-lock-name "emacs.local.desktop.lock"))
 
 ;; (defun my-desktop ()
 ;;   "Load the desktop and enable autosaving"
