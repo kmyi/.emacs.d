@@ -226,7 +226,7 @@ Nolonger affects 'linum-mode' background."
        (terminal-gray-l                   "#6C6C6C")
        ;; Adaptive colors
        (terminal-my-monokai-fg               "#F5F5F5")
-       (terminal-my-monokai-bg               "#111111")
+       (terminal-my-monokai-bg               "#080808")
        (terminal-my-monokai-hl-line          "#212121")
        (terminal-my-monokai-hl               "#303030")
        (terminal-my-monokai-emph             "#FFFAFA")
