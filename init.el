@@ -387,7 +387,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; Markdown
 ;; ============================================================================
 (require 'markdown-mode)
-(add-hook 'markdown-mode-hook (lambda () (setq-local default-justification (quote full))))
+;; (add-hook 'markdown-mode-hook (lambda () (setq-local default-justification (quote full))))
 
 ;; ============================================================================
 ;; AUC Tex Related
