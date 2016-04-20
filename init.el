@@ -114,7 +114,7 @@
       desktop-load-locked-desktop nil)
 
 ;; Desktop file depending on HOSTNAME
-(if (eq (string-match "\\." (getenv "HOSTNAME")) nil)
+(if (eq (string-match "ic" (getenv "HOSTNAME")) 0)
     ;; desktop for the servers
     (setq desktop-base-file-name (concat "emacs." (getenv "HOSTNAME") ".desktop")
 	  desktop-base-lock-name (concat "emacs." (getenv "HOSTNAME") ".desktop.lock"))
