@@ -36,10 +36,10 @@
 				      matlab-mode markdown-mode
 				      monokai-theme nlinum
 				      projectile-codesearch
-				      py-autopep8 py-isort pyvenv
+				      py-autopep8 py-isort
+				      python-environment pyvenv
 				      py-yapf rainbow-mode
-				      yaml-mode
-				      yasnippet xclip)
+				      yaml-mode yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
 ;; Set my packages as selected
