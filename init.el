@@ -166,6 +166,8 @@
 ;; do not close newly open buffers when exiting emacsclient
 (setq server-kill-new-buffers nil)
 
+;; do not ask when killing buffers: just do it
+(remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
 
 ;; ============================================================================
 ;; Emacs Windows Settings
