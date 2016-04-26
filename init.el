@@ -510,13 +510,19 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 (add-hook 'c-mode-common-hook 'turn-on-auto-fill) ; Autofill for C
 
+;; Now checks the home environment variable instead
+(if (eq (string-match "/home" (getenv "HOME")) 0)
+    (setq myindent-cmd "indent")
+  (setq myindent-cmd "gindent"))
+
 
 ;; Auto-indent using external program
 (defun c-reformat-buffer()
   (interactive)
   (save-buffer)
   (setq sh-indent-command (concat
-			   "gindent -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l200 -lp -npcs -nprs -npsl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1"
+			   myindent-cmd
+			   " -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli0 -d0 -di1 -nfc1 -i8 -ip0 -l200 -lp -npcs -nprs -npsl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts8 -il1"
 			   buffer-file-name
 			   )
 	)
