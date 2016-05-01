@@ -175,8 +175,7 @@
 
 ;; Disable menu bar and tool bar
 (tool-bar-mode -1)
-(unless window-system
-  (menu-bar-mode -1))
+(menu-bar-mode -1)
 
 ;; Scroll bars are simply annoying... don't really help
 (scroll-bar-mode -1)

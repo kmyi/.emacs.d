@@ -11,3 +11,4 @@ srecode-map.el
 anaconda-mode
 url
 flycheck*
+session.*
