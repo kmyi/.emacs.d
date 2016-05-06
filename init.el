@@ -64,13 +64,16 @@
 
 (provide 'my-base-packages)
 
-;; Printing
-(add-to-list 'load-path "~/.emacs.d/non-elpa/")
-(load "mac-print-mode.el")
+;; Printing for mac
+(unless (eq (string-match "/home" (getenv "HOME")) 0)
 
-(when (require 'mac-print-mode nil t)
-  (mac-print-mode 1)
-  (global-set-key (kbd "M-p") 'mac-print-buffer))
+  (add-to-list 'load-path "~/.emacs.d/non-elpa/")
+  (load "mac-print-mode.el")
+
+  (when (require 'mac-print-mode nil t)
+    (mac-print-mode 1)
+    (global-set-key (kbd "M-p") 'mac-print-buffer))
+)
 
 ;; ============================================================================
 ;; Basic Emacs Settings
@@ -439,7 +442,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; ispell
 ;; ============================================================================
 (require 'ispell)
-(setq ispell-program-name "/usr/local/bin/ispell")
+(setq ispell-program-name "ispell")
 
 ;; ============================================================================
 ;; Magit
