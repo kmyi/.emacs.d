@@ -64,10 +64,12 @@
 
 (provide 'my-base-packages)
 
+;; location for my custom packages
+(add-to-list 'load-path "~/.emacs.d/non-elpa/")
+
 ;; Printing for mac
 (unless (eq (string-match "/home" (getenv "HOME")) 0)
 
-  (add-to-list 'load-path "~/.emacs.d/non-elpa/")
   (load "mac-print-mode.el")
 
   (when (require 'mac-print-mode nil t)
