@@ -119,10 +119,10 @@
       desktop-load-locked-desktop nil)
 
 ;; Desktop file depending on HOSTNAME
-(if (or (eq (string-match "iccluster" (getenv "HOSTNAME")) 0) (eq (string-match "iccvlab" (getenv "HOSTNAME")) 0))
+(if (or (eq (string-match "iccluster" system-name) 0) (eq (string-match "iccvlab" system-name) 0))
     ;; desktop for the servers
-    (setq desktop-base-file-name (concat "emacs." (getenv "HOSTNAME") ".desktop")
-	  desktop-base-lock-name (concat "emacs." (getenv "HOSTNAME") ".desktop.lock"))
+    (setq desktop-base-file-name (concat "emacs." system-name ".desktop")
+	  desktop-base-lock-name (concat "emacs." system-name ".desktop.lock"))
   ;; deskstop for my system (local)
   (setq desktop-base-file-name "emacs.local.desktop"
 	desktop-base-lock-name "emacs.local.desktop.lock"))
