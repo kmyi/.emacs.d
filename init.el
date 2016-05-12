@@ -68,7 +68,7 @@
 (add-to-list 'load-path "~/.emacs.d/non-elpa/")
 
 ;; Printing for mac
-(unless (eq (string-match "/home" (getenv "HOME")) 0)
+(when (eq (string-match "linux" (prin1-to-string system-type)) nil)
 
   (load "mac-print-mode.el")
 
@@ -425,20 +425,33 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 ;; Use Skim as viewer, enable source <-> PDF sync
 ;; make latexmk available via C-c C-c
-;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
 (add-hook 'LaTeX-mode-hook (lambda ()
   (push
     '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
       :help "Run latexmk on file")
     TeX-command-list)))
 (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
- 
+
+;; For Mac
 ;; use Skim as default pdf viewer
 ;; Skim's displayline is used for forward search (from .tex to .pdf)
-;; option -b highlights the current line; option -g opens Skim in the background  
-(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
-(setq TeX-view-program-list
-     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+;; option -b highlights the current line; option -g opens Skim in the background
+(when (eq (string-match "linux" (prin1-to-string system-type)) nil)
+  (setq TeX-source-correlate-method (quote synctex))
+  (setq TeX-source-correlate-mode t)
+  (setq TeX-source-correlate-start-server t)
+  (setq TeX-view-program-list
+	'(("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+  (setq TeX-view-program-selection '((output-pdf "Skim")))
+  )
+;; For Linux
+(unless (eq (string-match "linux" (prin1-to-string system-type)) nil)
+  (setq TeX-source-correlate-method (quote synctex))
+  (setq TeX-source-correlate-mode t)
+  (setq TeX-source-correlate-start-server t)
+  (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
+  (setq TeX-view-program-selection '((output-pdf "Evince")))
+)
 
 ;; ============================================================================
 ;; ispell
@@ -515,9 +528,10 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (add-hook 'c-mode-common-hook 'turn-on-auto-fill) ; Autofill for C
 
 ;; Now checks the home environment variable instead
-(if (eq (string-match "/home" (getenv "HOME")) 0)
-    (setq myindent-cmd "indent")
-  (setq myindent-cmd "gindent"))
+;; use gindent in mac
+(if (eq (string-match "linux" (prin1-to-string system-type)) nil)
+    (setq myindent-cmd "gindent")
+  (setq myindent-cmd "indent"))
 
 
 ;; Auto-indent using external program
