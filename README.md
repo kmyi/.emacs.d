@@ -10,20 +10,12 @@ the snippets that basically added up to this big pile of mess.
 copyrights, please let me  know and I will put it  down immediately. Although I
 think it should be fine.
 
-Usage
+Requirements
 -------------------------------------------------------------------------------
 
-You need to pip install the following to be safe
+The following python pip packages are required
 
-> pip insatll autopep8 --user
-
-> pip install isort --user
-
-> pip install yapf --user
-
-> pip install pyenv --user
-
-> pip install environments --user
+* autopep8, isort, yapf, pyenv, environments, flake8
 
 For mac-print-mode, you need to do the following instructions
 
