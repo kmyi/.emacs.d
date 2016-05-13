@@ -592,7 +592,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 ;; Anaconda mode
 (add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
 ;; (add-hook 'python-mode-hook 'jedi:setup) ; enable the jedi!
 ;; ;; (add-hook 'python-mode-hook
