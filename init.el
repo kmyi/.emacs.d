@@ -474,6 +474,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; for displaying popups
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
+(add-hook 'server-done-hook 'kill-buffer)
+
 ;; ============================================================================
 ;; Fly check
 ;; ============================================================================
