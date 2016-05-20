@@ -116,7 +116,7 @@
 (setq desktop-dirname             "~/.emacs.d/desktop/"
       desktop-path                (list desktop-dirname)
       desktop-files-not-to-save   "^$" ;reload tramp paths
-      desktop-load-locked-desktop nil)
+      desktop-load-locked-desktop t)   ;load locked ones
 
 ;; Desktop file depending on HOSTNAME
 (if (or (eq (string-match "iccluster" system-name) 0) (eq (string-match "iccvlab" system-name) 0))
@@ -474,7 +474,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; for displaying popups
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 
-;; kill buffer correctness
+;; kill buffer correctnessq
 (add-hook 'server-done-hook 'kill-buffer)
 
 ;; ============================================================================
