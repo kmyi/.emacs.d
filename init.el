@@ -174,6 +174,16 @@
 ;; do not ask when killing buffers: just do it
 (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
 
+(defun client-save-kill-emacs()
+  "This function just kills everything adnd quits."
+  (progn
+    (save-some-buffers 'no-confirm)	; save all open buffers
+    (desktop-save-in-desktop-dir)	; save desktop
+    (dolist (client server-clients)	; close all clients
+      (server-delete-client client))
+    (setq kill-emacs-hook 'nil) 	; remove kill hooks
+    (kill-emacs)))			; kill emacs
+
 ;; ============================================================================
 ;; Emacs Windows Settings
 ;; ============================================================================
