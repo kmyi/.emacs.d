@@ -12,3 +12,4 @@ anaconda-mode
 url
 flycheck*
 session.*
+/network-security.data
