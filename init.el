@@ -177,6 +177,7 @@
 (defun client-save-kill-emacs()
   "This function just kills everything adnd quits."
   (progn
+    (tramp-cleanup-all-connections)	; close all tramp connections
     (save-some-buffers 'no-confirm)	; save all open buffers
     (desktop-save-in-desktop-dir)	; save desktop
     (dolist (client server-clients)	; close all clients

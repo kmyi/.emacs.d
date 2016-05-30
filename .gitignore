@@ -13,3 +13,4 @@ url
 flycheck*
 session.*
 /network-security.data
+/tramp
