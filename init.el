@@ -435,13 +435,13 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (setq TeX-PDF-mode t)
 
 ;; Use Skim as viewer, enable source <-> PDF sync
-;; make latexmk available via C-c C-c
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (push
-    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
-      :help "Run latexmk on file")
-    TeX-command-list)))
-(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
+;; ;; make latexmk available via C-c C-c
+;; (add-hook 'LaTeX-mode-hook (lambda ()
+;;   (push
+;;     '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
+;;       :help "Run latexmk on file")
+;;     TeX-command-list)))
+;; (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
 
 ;; For Mac
 ;; use Skim as default pdf viewer
@@ -460,8 +460,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
   (setq TeX-source-correlate-method (quote synctex))
   (setq TeX-source-correlate-mode t)
   (setq TeX-source-correlate-start-server t)
-  (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
-  (setq TeX-view-program-selection '((output-pdf "Evince")))
+  ;; (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
+  (setq TeX-view-program-selection '((output-pdf "Zathura")))
 )
 
 ;; ============================================================================
