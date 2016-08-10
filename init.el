@@ -177,6 +177,7 @@
 (defun client-save-kill-emacs()
   "This function just kills everything adnd quits."
   (progn
+    (tramp-cleanup-all-buffers)	; close all tramp connections
     (tramp-cleanup-all-connections)	; close all tramp connections
     (save-some-buffers 'no-confirm)	; save all open buffers
     (desktop-save-in-desktop-dir)	; save desktop
@@ -215,18 +216,6 @@
 (global-set-key (kbd "C-s-<right>")      'ns-next-frame)
 
 ;; ============================================================================
-;; Themes
-;; ============================================================================
-
-;; (load-theme 'solarized-dark t)
-
-(load "my-monokai-theme.el")
-(load-theme 'my-monokai t)
-
-;; (load-theme 'sanityinc-tomorrow-eighties t)
-
-
-;; ============================================================================
 ;; Buffer Cleanup
 ;; ============================================================================
 
@@ -234,8 +223,8 @@
 (require 'midnight)
 
 ;;kill buffers if they were last disabled more than this seconds ago
-(setq clean-buffer-list-delay-general 7) ; will clean after 7 days
-(setq clean-buffer-list-delay-special (* 7 (* 24 3600))) ;basically 7 days
+(setq clean-buffer-list-delay-general 3) ; will clean after 7 days
+(setq clean-buffer-list-delay-special (* 3 (* 24 3600))) ;basically 7 days
 ;; (setq clean-buffer-list-delay-special 2) ;basically 3 days
 
 (defvar clean-buffer-list-timer nil
@@ -641,6 +630,28 @@ You can disable 'clean-buffer-list' by (cancel-timer
           (lambda ()
             (local-set-key (kbd "C-c i")
                            'py-isort-buffer)))
+
+;; ============================================================================
+;; Themes
+;; ============================================================================
+
+;; (load-theme 'solarized-dark t)
+
+(load "my-monokai-theme.el")
+(load-theme 'my-monokai t)
+
+;; (load-theme 'sanityinc-tomorrow-eighties t)
+
+;; Cursor color
+(set-cursor-color "DeepSkyBlue")
+
+;; for the daemon?
+(require 'frame)
+(defun set-cursor-hook (frame)
+(modify-frame-parameters
+  frame (list (cons 'cursor-color "DeepSkyBlue"))))
+
+(add-hook 'after-make-frame-functions 'set-cursor-hook)
 
 ;; ============================================================================
 ;; CMAKE
