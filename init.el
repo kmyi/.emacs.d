@@ -653,6 +653,14 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 (add-hook 'after-make-frame-functions 'set-cursor-hook)
 
+;; Set transparancy
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;;(set-frame-parameter (selected-frame) 'alpha <both>)
+;; (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
+;; (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+(set-frame-parameter (selected-frame) 'alpha '(95))
+(add-to-list 'default-frame-alist '(alpha . (95)))
+
 ;; ============================================================================
 ;; CMAKE
 ;; ============================================================================
