@@ -14,3 +14,4 @@ flycheck*
 session.*
 /network-security.data
 /tramp
+.tutor

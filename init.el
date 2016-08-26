@@ -28,7 +28,7 @@
 				      company-anaconda
 				      company-auctex company-math
 				      company-web
-				      flycheck-clangcheck
+				      evil-tutor evil evil-magit
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
