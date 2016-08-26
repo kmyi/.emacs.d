@@ -85,9 +85,7 @@
 (require 'evil)
 (setq evil-want-fine-undo t)
 
-;; Evil mode escape key
-(require 'evil-escape)
-(global-set-key (kbd "C-c C-c") 'evil-escape)
+(global-set-key (kbd "C-c C-c") 'evil-force-normal-state)
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
