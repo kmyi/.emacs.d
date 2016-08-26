@@ -28,7 +28,7 @@
 				      company-anaconda
 				      company-auctex company-math
 				      company-web evil-tutor evil
-				      evil-magit
+				      evil-magit evil-escape
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
@@ -85,7 +85,9 @@
 (require 'evil)
 (setq evil-want-fine-undo t)
 
-(global-set-key (kbd "C-c C-c") 'evil-force-normal-state)
+;; Evil mode escape key
+(require 'evil-escape)
+(global-set-key (kbd "C-c C-g") 'evil-escape)
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
