@@ -27,8 +27,8 @@
 				      company-c-headers
 				      company-anaconda
 				      company-auctex company-math
-				      company-web
-				      evil-tutor evil evil-magit
+				      company-web evil-tutor evil
+				      evil-magit evil-escape
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
@@ -80,6 +80,14 @@
 ;; ============================================================================
 ;; Basic Emacs Settings
 ;; ============================================================================
+
+;; Evil mode undo setting
+(require 'evil)
+(setq evil-want-fine-undo t)
+
+;; Evil mode escape key
+(require 'evil-escape)
+(global-set-key (kbd "C-c C-c") 'evil-escape)
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
