@@ -591,8 +591,11 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (require 'python)
 (add-hook 'python-mode-hook 'auto-make-header)	 ; Enable auto-make-header for python
 
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i")
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args "-i")
+
+(setq python-shell-interpreter "python")
+
 
 ;; For python-environment
 (require 'python-environment)
