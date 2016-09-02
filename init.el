@@ -596,7 +596,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 			     "python -c 'import IPython; print(IPython.__version__[:1])'")))
     ;; If 5 and above
     (setq python-shell-interpreter "ipython"
-	  python-shell-interpreter-args "--single-prompt -i")
+	  python-shell-interpreter-args "--simple-prompt -i")
   ;; If old ipython
   (setq python-shell-interpreter "ipython"
 	python-shell-interpreter-args "-i"))
