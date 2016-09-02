@@ -591,10 +591,17 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (require 'python)
 (add-hook 'python-mode-hook 'auto-make-header)	 ; Enable auto-make-header for python
 
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args "-i")
+;; Change interpreter depending on ipython version
+(if (<= 5 (string-to-number (shell-command-to-string
+			     "python -c 'import IPython; print(IPython.__version__[:1])'")))
+    ;; If 5 and above
+    (setq python-shell-interpreter "ipython"
+	  python-shell-interpreter-args "--single-prompt -i")
+  ;; If old ipython
+  (setq python-shell-interpreter "ipython"
+	python-shell-interpreter-args "-i"))
 
-(setq python-shell-interpreter "python")
+;; (setq python-shell-interpreter "python")
 
 
 ;; For python-environment
