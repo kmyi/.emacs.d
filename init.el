@@ -29,6 +29,7 @@
 				      company-auctex company-math
 				      company-web evil-tutor evil
 				      evil-magit evil-escape
+				      evil-multiedit
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
@@ -90,6 +91,13 @@
 (require 'evil-escape)
 (setq-default evil-escape-key-sequence "jk")
 (global-set-key (kbd "C-c C-g") 'evil-escape-mode)
+
+;; Evil multiedit
+(require 'evil-multiedit)
+(evil-multiedit-default-keybinds)
+
+;; Hangul when toggled
+(setq default-input-method "korean-hangul")
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
