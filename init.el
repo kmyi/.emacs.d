@@ -137,10 +137,10 @@
       desktop-load-locked-desktop t)   ;load locked ones
 
 ;; Desktop file depending on HOSTNAME
-(if (or (eq (string-match "iccluster" system-name) 0) (eq (string-match "iccvlab" system-name) 0))
+(if (or (eq (string-match "iccluster" (system-name)) 0) (eq (string-match "iccvlab" (system-name)) 0))
     ;; desktop for the servers
-    (setq desktop-base-file-name (concat "emacs." system-name ".desktop")
-	  desktop-base-lock-name (concat "emacs." system-name ".desktop.lock"))
+    (setq desktop-base-file-name (concat "emacs." (system-name) ".desktop")
+	  desktop-base-lock-name (concat "emacs." (system-name) ".desktop.lock"))
   ;; deskstop for my system (local)
   (setq desktop-base-file-name "emacs.local.desktop"
 	desktop-base-lock-name "emacs.local.desktop.lock"))
@@ -285,7 +285,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (setq org-agenda-files '("~/Org"))
-(setq org-enforce-todo-dependencies t) 
+(setq org-enforce-todo-dependencies t)
 
 ;; Priorities
 (setq org-highest-priority ?A)
@@ -514,7 +514,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; Fly check
 ;; ============================================================================
 (require 'flycheck)
-(add-hook 'after-init-hook 'global-flycheck-mode) 
+(add-hook 'after-init-hook 'global-flycheck-mode)
 (eval-after-load 'flycheck
   '(define-key flycheck-mode-map (kbd "C-x /") 'helm-flycheck))
 
