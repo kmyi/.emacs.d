@@ -90,7 +90,7 @@
 ;; Evil mode escape key
 (require 'evil-escape)
 (setq-default evil-escape-key-sequence "jk")
-(global-set-key (kbd "C-c C-g") 'evil-escape-mode)
+(global-set-key (kbd "C-c C-k") 'evil-escape-mode)
 
 ;; Evil multiedit
 (require 'evil-multiedit)
@@ -291,6 +291,12 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (setq org-highest-priority ?A)
 (setq org-lowest-priority ?E)
 (setq org-default-priority ?D)
+
+;; Logging
+(setq org-log-done 'time)
+
+;; Links
+(setq org-return-follows-link t)
 
 ;; ============================================================================
 ;; HELM
