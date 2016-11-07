@@ -98,6 +98,8 @@
 
 ;; Hangul when toggled
 (setq default-input-method "korean-hangul")
+;; Set toggle key
+(global-set-key (kbd "s-SPC") 'toggle-input-method)
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
