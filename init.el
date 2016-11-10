@@ -27,9 +27,9 @@
 				      company-c-headers
 				      company-anaconda
 				      company-auctex company-math
-				      company-web evil-tutor evil
-				      evil-magit evil-escape
-				      evil-multiedit
+				      company-web dumb-jump
+				      evil-tutor evil evil-magit
+				      evil-escape evil-multiedit
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
@@ -100,6 +100,9 @@
 (setq default-input-method "korean-hangul")
 ;; Set toggle key
 (global-set-key (kbd "s-SPC") 'toggle-input-method)
+
+;; Dumb jump
+(dumb-jump-mode)
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
@@ -288,6 +291,9 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (global-set-key "\C-ca" 'org-agenda)
 (setq org-agenda-files '("~/Org"))
 (setq org-enforce-todo-dependencies t)
+(setq org-agenda-dim-blocked-tasks 'invisible)
+(setq org-agenda-todo-ignore-scheduled 'future)
+(setq org-agenda-tags-todo-honor-ignore-options t)
 
 ;; Priorities
 (setq org-highest-priority ?A)
