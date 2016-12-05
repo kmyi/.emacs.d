@@ -348,16 +348,21 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; Enable Line and Column Numbering
 ;; ============================================================================
 
-;; use nlinum instead as linum is slugish
-(require 'nlinum)
-(global-nlinum-mode t)
 ;; Show line-number in the mode line
 (line-number-mode 1)
 ;; Show column-number in the mode line
 (column-number-mode 1)
-;; specify line number format
-(unless window-system
-  (setq nlinum-format "%d "))
+
+;; use nlinum instead as linum is slugish
+;; Enabled only with emacs 25+
+(if (< emacs-major-version 25)
+    (message "emacs version < 25, will not use nlinum")
+  (progn
+    (require 'nlinum)
+    (global-nlinum-mode -1)
+    ;; specify line number format
+    (unless window-system
+      (setq nlinum-format "%d "))))
 
 ;; ============================================================================
 ;; Auto Headers
