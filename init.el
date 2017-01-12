@@ -374,15 +374,25 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (column-number-mode 1)
 
 ;; use nlinum instead as linum is slugish
-;; Enabled only with emacs 25+
-(if (< emacs-major-version 25)
-    (message "emacs version < 25, will not use nlinum")
-  (progn
-    (require 'nlinum)
-    (global-nlinum-mode -1)
-    ;; specify line number format
-    (unless window-system
-      (setq nlinum-format "%d "))))
+
+;; ;; Enabled only with emacs 25+
+;; (if (< emacs-major-version 25)
+;;     (message "emacs version < 25, will not use nlinum")
+;;   (progn
+;;     (require 'nlinum)
+;;     (global-nlinum-mode -1)
+;;     ;; specify line number format
+;;     (unless window-system
+;;       (setq nlinum-format "%d "))))
+
+;; nlinum workaround
+(defun initialize-nlinum (&optional frame)
+  (require 'nlinum)
+  (add-hook 'prog-mode-hook 'nlinum-mode))
+(when (daemonp)
+  (add-hook 'window-setup-hook 'initialize-nlinum)
+  (defadvice make-frame (around toggle-nlinum-mode compile activate)
+    (nlinum-mode -1) ad-do-it (nlinum-mode 1)))
 
 ;; ============================================================================
 ;; Auto Headers
