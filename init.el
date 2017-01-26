@@ -705,7 +705,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; The following bindings are similar to spacemacs settings
 (define-key evil-normal-state-map "mhh" 'anaconda-mode-show-doc)
 (define-key evil-normal-state-map "mgg" 'anaconda-mode-find-definitions)
-(define-key evil-normal-state-map "mga" 'anaconda-mode-find-assingments)
+(define-key evil-normal-state-map "mga" 'anaconda-mode-find-assignments)
 (define-key evil-normal-state-map "mgr" 'anaconda-mode-find-references)
 (define-key evil-normal-state-map "mGG" 'anaconda-mode-go-back)
 
