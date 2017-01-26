@@ -94,6 +94,9 @@
 (evil-mode 1)
 (setq evil-want-fine-undo t)
 
+;; Set m as an escape key
+(define-key evil-normal-state-map "m" nil)
+
 ;; Evil mode escape key
 (require 'evil-escape)
 (setq-default evil-escape-key-sequence "jk")
@@ -697,6 +700,16 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;;           (lambda ()
 ;;             (local-set-key (kbd "<backtab>")
 ;;                            'company-jedi)))
+
+;; Bindings for evil mode
+;; The following bindings are similar to spacemacs settings
+(define-key evil-normal-state-map "mhh" 'anaconda-mode-show-doc)
+(define-key evil-normal-state-map "mgg" 'anaconda-mode-find-definitions)
+(define-key evil-normal-state-map "mga" 'anaconda-mode-find-assingments)
+(define-key evil-normal-state-map "mgr" 'anaconda-mode-find-references)
+;; Also make it's behavior as in evil mode
+(evilify anaconda-mode-view-mode anaconda-mode-view-mode-map
+	 (kbd "q") 'kill-buffer-and-window)
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
