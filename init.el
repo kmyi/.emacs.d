@@ -707,9 +707,6 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (define-key evil-normal-state-map "mgg" 'anaconda-mode-find-definitions)
 (define-key evil-normal-state-map "mga" 'anaconda-mode-find-assingments)
 (define-key evil-normal-state-map "mgr" 'anaconda-mode-find-references)
-;; Also make it's behavior as in evil mode
-(evilify anaconda-mode-view-mode anaconda-mode-view-mode-map
-	 (kbd "q") 'kill-buffer-and-window)
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
