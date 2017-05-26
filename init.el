@@ -535,7 +535,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
   (setq TeX-source-correlate-mode t)
   (setq TeX-source-correlate-start-server t)
   ;; (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
-  (setq TeX-view-program-selection '((output-pdf "Zathura")))
+  ;; (setq TeX-view-program-selection '((output-pdf "Zathura")))
+  (setq TeX-view-program-selection '((output-pdf "Evince")))
 )
 
 ;; ============================================================================
@@ -761,8 +762,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
 ;; (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
 ;; (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
-(set-frame-parameter (selected-frame) 'alpha '(90))
-(add-to-list 'default-frame-alist '(alpha . (90)))
+(set-frame-parameter (selected-frame) 'alpha '(95))
+(add-to-list 'default-frame-alist '(alpha . (95)))
 
 ;; ============================================================================
 ;; CMAKE
