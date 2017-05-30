@@ -150,7 +150,7 @@
 )
 
 ;; Make initial window size custom
-(add-to-list 'default-frame-alist '(height . 36))
+(add-to-list 'default-frame-alist '(height . 48))
 (add-to-list 'default-frame-alist '(width . 100))
 
 ;; Enable desktop save on exit
@@ -766,8 +766,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;;(set-frame-parameter (selected-frame) 'alpha <both>)
 ;; (set-frame-parameter (selected-frame) 'alpha '(85 . 50))
 ;; (add-to-list 'default-frame-alist '(alpha . (85 . 50)))
-(set-frame-parameter (selected-frame) 'alpha '(95))
-(add-to-list 'default-frame-alist '(alpha . (95)))
+(set-frame-parameter (selected-frame) 'alpha '(100))
+(add-to-list 'default-frame-alist '(alpha . (100)))
 
 ;; ============================================================================
 ;; CMAKE
