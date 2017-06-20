@@ -15,9 +15,9 @@
 (package-initialize)
 
 ;; list of repositories
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("marmalade" . "https://marmalade-repo.org/packages/")
 			 ("melpa" . "https://melpa.org/packages/")))
-			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
 
 ;; Codes below are scraped from
 ;; batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
