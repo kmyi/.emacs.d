@@ -16,8 +16,8 @@
 
 ;; list of repositories
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "https://melpa.org/packages/")))
+			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
 
 ;; Codes below are scraped from
 ;; batsov.com/articles/2012/02/19/package-management-in-emacs-the-good-the-bad-and-the-ugly/
@@ -540,7 +540,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
   (setq TeX-source-correlate-start-server t)
   ;; (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")))
   ;; (setq TeX-view-program-selection '((output-pdf "Zathura")))
-  (setq TeX-view-program-selection '((output-pdf "Evince")))
+  ;; (setq TeX-view-program-selection '((output-pdf "Evince")))
+  (setq TeX-view-program-selection '((output-pdf "Okular")))
 )
 
 ;; ============================================================================
