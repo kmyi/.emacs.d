@@ -115,17 +115,23 @@
 (dumb-jump-mode)
 
 ;; No longer needed as of emacs 25 and now I am finally on it!
-;; ;; comment or uncomment lines
-;; (defun comment-or-uncomment-region-or-line ()
-;;     "Comments or uncomments the region or the current line if there's no active region."
-;;     (interactive)
-;;     (let (beg end)
-;;         (if (region-active-p)
-;;             (setq beg (region-beginning) end (region-end))
-;;             (setq beg (line-beginning-position) end (line-end-position)))
-;;         (comment-or-uncomment-region beg end)
-;;         (next-logical-line)))
-;; (global-set-key  (kbd "C-x C-;") 'comment-or-uncomment-region-or-line)
+(defun comment-or-uncomment-region-or-line ()
+    "Comments or uncomments the region or the current line if there's no active region."
+    (interactive)
+    (let (beg end)
+        (if (region-active-p)
+            (setq beg (region-beginning) end (region-end))
+            (setq beg (line-beginning-position) end (line-end-position)))
+        (comment-or-uncomment-region beg end)
+        (next-logical-line)))
+
+(if (< emacs-major-version 25)
+    (progn
+      (message "emacs version < 25, comment line behaviour is
+      different, using workaround")
+      (global-set-key  (kbd "C-x C-;") 'comment-or-uncomment-region-or-line))
+  (progn
+    (message "emacs version >= 25, comment line behaviour is fine.")))
 
 ;; Text mode and Auto Fill mode
 ;; The next two lines put Emacs into Text mode
@@ -384,23 +390,24 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 ;; Enabled only with emacs 25+
 (if (< emacs-major-version 25)
-    (message "emacs version < 25, will not use nlinum")
+    (progn
+      (message "emacs version < 25, will not use nlinum globally,
+      using workaround")
+      ;; nlinum workaround
+      (defun initialize-nlinum (&optional frame)
+	(require 'nlinum)
+	(add-hook 'prog-mode-hook 'nlinum-mode))
+      (when (daemonp)
+	(add-hook 'window-setup-hook 'initialize-nlinum)
+	(defadvice make-frame (around toggle-nlinum-mode compile activate)
+	  (nlinum-mode -1) ad-do-it (nlinum-mode 1))))
   (progn
     (message "emacs version >= 25, will use nlinum globally")
     (require 'nlinum)
-    (global-nlinum-mode -1)
+    (global-nlinum-mode 1)
     ;; specify line number format
     (unless window-system
       (setq nlinum-format "%d "))))
-
-;; ;; nlinum workaround
-;; (defun initialize-nlinum (&optional frame)
-;;   (require 'nlinum)
-;;   (add-hook 'prog-mode-hook 'nlinum-mode))
-;; (when (daemonp)
-;;   (add-hook 'window-setup-hook 'initialize-nlinum)
-;;   (defadvice make-frame (around toggle-nlinum-mode compile activate)
-;;     (nlinum-mode -1) ad-do-it (nlinum-mode 1)))
 
 ;; ============================================================================
 ;; Auto Headers
