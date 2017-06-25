@@ -386,6 +386,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (if (< emacs-major-version 25)
     (message "emacs version < 25, will not use nlinum")
   (progn
+    (message "emacs version >= 25, will use nlinum globally")
     (require 'nlinum)
     (global-nlinum-mode -1)
     ;; specify line number format
