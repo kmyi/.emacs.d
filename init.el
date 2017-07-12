@@ -27,15 +27,17 @@
 				      company-c-headers
 				      company-anaconda
 				      company-auctex company-math
-				      company-web dumb-jump
-				      evil-tutor evil evil-magit
-				      evil-escape evil-multiedit
+				      company-lua company-web
+				      dumb-jump evil-tutor evil
+				      evil-magit evil-escape
+				      evil-multiedit
 				      flycheck-pyflakes header2
 				      helm helm-company
 				      helm-projectile
-				      helm-flycheck htmlize magit
-				      matlab-mode markdown-mode
-				      monokai-theme nlinum
+				      helm-flycheck htmlize
+				      lua-mode magit matlab-mode
+				      markdown-mode monokai-theme
+				      nlinum
 				      projectile-codesearch
 				      py-autopep8 py-isort
 				      python-environment pyvenv
@@ -794,6 +796,9 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (company-lua lua-mode anaconda-mode cmake-mode company-c-headers company-anaconda company-auctex company-math company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip)))
  '(safe-local-variable-values
    (quote
     ((eval when
