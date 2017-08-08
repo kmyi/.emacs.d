@@ -24,25 +24,26 @@
 
 ;; List of packages to install
 (defvar my-base-packages '(anaconda-mode cmake-mode
-				      company-c-headers
-				      company-anaconda
-				      company-auctex company-math
-				      company-lua company-web
-				      dumb-jump evil-tutor evil
-				      evil-magit evil-escape
-				      evil-multiedit
-				      flycheck-pyflakes header2
-				      helm helm-company
-				      helm-projectile
-				      helm-flycheck htmlize
-				      lua-mode magit matlab-mode
-				      markdown-mode monokai-theme
-				      nlinum
-				      projectile-codesearch
-				      py-autopep8 py-isort
-				      python-environment pyvenv
-				      py-yapf rainbow-mode
-				      yaml-mode yasnippet xclip)
+					 color-theme-solarized
+					 company-c-headers
+					 company-anaconda
+					 company-auctex company-math
+					 company-lua company-web
+					 dumb-jump evil-tutor evil
+					 evil-magit evil-escape
+					 evil-multiedit
+					 flycheck-pyflakes header2
+					 helm helm-company
+					 helm-projectile
+					 helm-flycheck htmlize
+					 lua-mode magit matlab-mode
+					 markdown-mode monokai-theme
+					 nlinum
+					 projectile-codesearch
+					 py-autopep8 py-isort
+					 python-environment pyvenv
+					 py-yapf rainbow-mode
+					 yaml-mode yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
 ;; Set my packages as selected
@@ -80,12 +81,20 @@
     (global-set-key (kbd "M-p") 'mac-print-buffer))
 )
 
+;; Set fond size for Mac
+(when (eq (string-match "linux" (prin1-to-string system-type)) nil)
+  (set-face-attribute 'default nil :height 130))
+
 ;; Tramp bug fix that started to happen for no reason
 ;; One guess is due to the wrong wifi configuration 
 ;; https://emacs.stackexchange.com/questions/18438/emacs-suspend-at-startup-ssh-connection-issue
 (setq tramp-ssh-controlmaster-options
       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
 (require 'tramp)
+
+
+;; gnu pg fix
+(setq epa-pinentry-mode 'loopback)
 
 ;; ============================================================================
 ;; Basic Emacs Settings
@@ -558,7 +567,12 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; ispell
 ;; ============================================================================
 (require 'ispell)
-(setq ispell-program-name "ispell")
+(when (eq (string-match "linux" (prin1-to-string system-type)) nil)
+  (setq ispell-program-name "aspell"))
+;; For Linux
+(unless (eq (string-match "linux" (prin1-to-string system-type)) nil)
+  (setq TeX-source-correlate-method (quote synctex))
+  (setq ispell-program-name "ispell"))
 
 ;; ============================================================================
 ;; Magit
@@ -754,23 +768,24 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; Themes
 ;; ============================================================================
 
-;; (load-theme 'solarized-dark t)
+(setq frame-background-mode 'dark)
+(load-theme 'solarized t)
 
-(load "my-monokai-theme.el")
-(load-theme 'my-monokai t)
+;; (load "my-monokai-theme.el")
+;; (load-theme 'my-monokai t)
 
 ;; (load-theme 'sanityinc-tomorrow-eighties t)
 
 ;; Cursor color
-(set-cursor-color "DeepSkyBlue")
+;; (set-cursor-color "DeepSkyBlue")
 
 ;; for the daemon?
-(require 'frame)
-(defun set-cursor-hook (frame)
-(modify-frame-parameters
-  frame (list (cons 'cursor-color "DeepSkyBlue"))))
+;; (require 'frame)
+;; (defun set-cursor-hook (frame)
+;; (modify-frame-parameters
+;;   frame (list (cons 'cursor-color "DeepSkyBlue"))))
 
-(add-hook 'after-make-frame-functions 'set-cursor-hook)
+;; (add-hook 'after-make-frame-functions 'set-cursor-hook)
 
 ;; Set transparancy
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
@@ -798,7 +813,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-lua lua-mode anaconda-mode cmake-mode company-c-headers company-anaconda company-auctex company-math company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip)))
+    (color-theme-solarized company-lua lua-mode anaconda-mode cmake-mode company-c-headers company-anaconda company-auctex company-math company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip)))
  '(safe-local-variable-values
    (quote
     ((eval when
