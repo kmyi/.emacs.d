@@ -169,7 +169,7 @@
 
 ;; Make initial window size custom
 (add-to-list 'default-frame-alist '(height . 48))
-(add-to-list 'default-frame-alist '(width . 100))
+(add-to-list 'default-frame-alist '(width . 90))
 
 ;; Enable desktop save on exit
 (require 'desktop)
