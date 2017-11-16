@@ -118,6 +118,15 @@
 (require 'evil-multiedit)
 (evil-multiedit-default-keybinds)
 
+;; -- move through softwrapped lines naturally
+;;    https://stackoverflow.com/a/20899418/269247
+(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+; make horizontal movement cross lines
+(setq-default evil-cross-lines t)
+
 ;; Hangul when toggled
 (setq default-input-method "korean-hangul")
 ;; Set toggle key
