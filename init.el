@@ -122,10 +122,15 @@
 ;;    https://stackoverflow.com/a/20899418/269247
 (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-; make horizontal movement cross lines
-(setq-default evil-cross-lines t)
+(define-key evil-motion-state-map (kbd "<remap> <evil-first-non-blank>") 'evil-first-non-blank-of-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-digit-argument-or-evil-beginning-of-line>") 'evil-beginning-of-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-end-of-line>") 'evil-end-of-visual-line)
+;; ;; make horizontal movement cross lines
+;; (setq-default evil-cross-lines t)
+;; ;; Make display suitable for visual line mode
+;; (setq-default global-visual-line-mode t)
+;; ;; Show linebreaks
+;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
 ;; Hangul when toggled
 (setq default-input-method "korean-hangul")
@@ -300,8 +305,8 @@
 (require 'midnight)
 
 ;;kill buffers if they were last disabled more than this seconds ago
-(setq clean-buffer-list-delay-general 14) ; will clean after 7 days
-(setq clean-buffer-list-delay-special (* 14 (* 24 3600))) ;basically 7 days
+(setq clean-buffer-list-delay-general 5) ; will clean after 5 days
+(setq clean-buffer-list-delay-special (* 5 (* 24 3600))) ;basically5 days
 ;; (setq clean-buffer-list-delay-special 2) ;basically 3 days
 
 (defvar clean-buffer-list-timer nil
@@ -438,7 +443,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (add-hook 'write-file-hooks 'auto-update-file-header)
 
 ;; Change copyright notice to my lab
-(setq header-copyright-notice "Copyright (C), EPFL Computer Vision Lab.\n")
+(setq header-copyright-notice "Copyright (C), Visual Computing Group @ University of Victoria.\n")
 
 ;; Header stylings
 (setq make-header-hook '(
