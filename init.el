@@ -458,17 +458,17 @@ You can disable 'clean-buffer-list' by (cancel-timer
 			 header-creation-date
 			 ;; header-rcs-id
 			 header-version
-			 header-pkg-requires
+			 ;; header-pkg-requires
 			 ;; header-sccs
 			 ;; header-modification-date
 			 ;; header-modification-author
 			 ;; header-update-count
-			 header-url
-			 header-doc-url
-			 header-keywords
-			 header-compatibility
-			 header-blank
-			 header-lib-requires
+			 ;; header-url
+			 ;; header-doc-url
+			 ;; header-keywords
+			 ;; header-compatibility
+			 ;; header-blank
+			 ;; header-lib-requires
 			 header-end-line
 			 header-commentary
 			 header-blank
@@ -826,66 +826,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#151610" "#F92672" "#A6E22E" "#E6DB74" "#66D9EF" "#FD5FF0" "#A1EFE4" "#F8F8F2"])
- '(compilation-message-face (quote default))
- '(custom-safe-themes
-   (quote
-    ("69a22b13266d3fd085dbee88950f2789b7a73a2ed89a59ffc70d71709d89da66" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
- '(fci-rule-color "#3E3D31")
- '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
- '(highlight-tail-colors
-   (quote
-    (("#3E3D31" . 0)
-     ("#67930F" . 20)
-     ("#349B8D" . 30)
-     ("#21889B" . 50)
-     ("#968B26" . 60)
-     ("#A45E0A" . 70)
-     ("#A41F99" . 85)
-     ("#3E3D31" . 100))))
- '(magit-diff-use-overlays nil)
- '(package-selected-packages
-   (quote
-    (color-theme-solarized company-lua lua-mode anaconda-mode cmake-mode company-c-headers company-anaconda company-auctex company-math company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip)))
- '(pos-tip-background-color "#A6E22E")
- '(pos-tip-foreground-color "#151610")
- '(safe-local-variable-values
-   (quote
-    ((eval when
-	   (fboundp
-	    (quote aggressive-indent-mode))
-	   (aggressive-indent-mode -1))
-     (eval when
-	   (fboundp
-	    (quote rainbow-mode))
-	   (rainbow-mode 1))
-     (header-auto-update-enabled))))
- '(solarized-termcolors 256)
- '(vc-annotate-background nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#F92672")
-     (40 . "#CF4F1F")
-     (60 . "#C26C0F")
-     (80 . "#E6DB74")
-     (100 . "#AB8C00")
-     (120 . "#A18F00")
-     (140 . "#989200")
-     (160 . "#8E9500")
-     (180 . "#A6E22E")
-     (200 . "#729A1E")
-     (220 . "#609C3C")
-     (240 . "#4E9D5B")
-     (260 . "#3C9F79")
-     (280 . "#A1EFE4")
-     (300 . "#299BA6")
-     (320 . "#2896B5")
-     (340 . "#2790C3")
-     (360 . "#66D9EF"))))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   (unspecified "#151610" "#3E3D31" "#A20C41" "#F92672" "#67930F" "#A6E22E" "#968B26" "#E6DB74" "#21889B" "#66D9EF" "#A41F99" "#FD5FF0" "#349B8D" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
