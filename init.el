@@ -32,6 +32,7 @@
 					 dumb-jump evil-tutor evil
 					 evil-magit evil-escape
 					 evil-multiedit
+					 exec-path-from-shell
 					 flycheck-pyflakes header2
 					 helm helm-company
 					 helm-projectile
@@ -593,6 +594,11 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; Magit
 ;; ============================================================================
 (require 'magit)
+
+;; Get ssh-agent if it's there!
+(require 'exec-path-from-shell)
+(exec-path-from-shell-copy-env "SSH_AGENT_PID")
+(exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 
 ;; (setq magit-display-buffer-function (quote display-buffer)) ;buffer display settings
 ;; (setq magit-status-buffer-switch-function 'switch-to-buffer) ;magit settings
