@@ -119,21 +119,21 @@
 (require 'evil-multiedit)
 (evil-multiedit-default-keybinds)
 
-;; -- move through softwrapped lines naturally
-;;    https://stackoverflow.com/a/20899418/269247
-(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-first-non-blank>") 'evil-first-non-blank-of-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-digit-argument-or-evil-beginning-of-line>") 'evil-beginning-of-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-end-of-line>") 'evil-end-of-visual-line)
-;; ;; make horizontal movement cross lines
-;; (setq-default evil-cross-lines t)
-;; ;; Make display suitable for visual line mode
-;; (setq-default global-visual-line-mode t)
-;; ;; Show linebreaks
-;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+;; ;; -- move through softwrapped lines naturally
+;; ;;    https://stackoverflow.com/a/20899418/269247
+;; (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+;; (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+;; (define-key evil-motion-state-map (kbd "<remap> <evil-first-non-blank>") 'evil-first-non-blank-of-visual-line)
+;; (define-key evil-motion-state-map (kbd "<remap> <evil-digit-argument-or-evil-beginning-of-line>") 'evil-beginning-of-visual-line)
+;; (define-key evil-motion-state-map (kbd "<remap> <evil-end-of-line>") 'evil-end-of-visual-line)
+;; ;; ;; make horizontal movement cross lines
+;; ;; (setq-default evil-cross-lines t)
+;; ;; ;; Make display suitable for visual line mode
+;; ;; (setq-default global-visual-line-mode t)
+;; ;; ;; Show linebreaks
+;; ;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
-;; Hangul when toggled
+;; ;; Hangul when toggled
 (setq default-input-method "korean-hangul")
 ;; Set toggle key
 (global-set-key (kbd "s-SPC") 'toggle-input-method)
@@ -538,6 +538,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(add-hook 'LaTeX-mode-hook 'turn-off-auto-fill)
 (setq reftex-plug-into-AUCTeX t)
 
 ;; ;; set default justification as full for latex mode
@@ -758,7 +759,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (define-key evil-normal-state-map "mgg" 'anaconda-mode-find-definitions)
 (define-key evil-normal-state-map "mga" 'anaconda-mode-find-assignments)
 (define-key evil-normal-state-map "mgr" 'anaconda-mode-find-references)
-(define-key evil-normal-state-map "mGG" 'anaconda-mode-go-back)
+(define-key evil-normal-state-map "mGG" 'xref-pop-marker-stack)
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
