@@ -43,6 +43,7 @@
 					 projectile-codesearch
 					 py-autopep8 py-isort
 					 python-environment pyvenv
+					 python-black
 					 py-yapf rainbow-mode
 					 yaml-mode yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
@@ -101,6 +102,9 @@
 ;; ============================================================================
 ;; Basic Emacs Settings
 ;; ============================================================================
+
+;; Comment line
+(global-set-key (kbd "C-x ;") 'comment-line)
 
 ;; Evil mode undo setting
 (require 'evil)
@@ -779,8 +783,16 @@ You can disable 'clean-buffer-list' by (cancel-timer
             (local-set-key (kbd "C-c y")
                            'py-yapf-buffer)))
 
+(require 'python-black)
+;; (add-hook 'python-mode-hook 'python-black-on-save-mode) ; run yapf on save
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c b")
+                           'python-black-buffer)))
+
 (require 'py-isort)
 ;; (add-hook 'before-save-hook 'py-isort-before-save) 
+(setq python-black-extra-args '("-l 79"))
 (add-hook 'python-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c i")
@@ -827,13 +839,30 @@ You can disable 'clean-buffer-list' by (cancel-timer
 	   '(("\\.cmake\\'" . cmake-mode))
 	   auto-mode-alist))
 
+;; ;; ============================================================================
+;; ;; OSX
+;; ;; ============================================================================
+;; ;; From http://allkindsofrandomstuff.blogspot.com/2009/09/sharing-mac-clipboard-with-emacs.html
+;; (defun copy-from-osx ()
+;;   (shell-command-to-string "pbpaste"))
+
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil)) 
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
+
+;; Use X Clip to copy to system clipboard
+(xclip-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(package-selected-packages
+   (quote
+    (python-black anaconda-mode cmake-mode color-theme-solarized company-c-headers company-anaconda company-auctex company-math company-lua company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit exec-path-from-shell flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize lua-mode magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
