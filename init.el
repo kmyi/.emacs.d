@@ -32,6 +32,7 @@
 					 dumb-jump evil-tutor evil
 					 evil-magit evil-escape
 					 evil-multiedit
+					 exec-path-from-shell
 					 flycheck-pyflakes header2
 					 helm helm-company
 					 helm-projectile
@@ -42,6 +43,7 @@
 					 projectile-codesearch
 					 py-autopep8 py-isort
 					 python-environment pyvenv
+					 python-black
 					 py-yapf rainbow-mode
 					 yaml-mode yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
@@ -101,6 +103,9 @@
 ;; Basic Emacs Settings
 ;; ============================================================================
 
+;; Comment line
+(global-set-key (kbd "C-x ;") 'comment-line)
+
 ;; Evil mode undo setting
 (require 'evil)
 (evil-mode 1)
@@ -118,16 +123,21 @@
 (require 'evil-multiedit)
 (evil-multiedit-default-keybinds)
 
-;; -- move through softwrapped lines naturally
-;;    https://stackoverflow.com/a/20899418/269247
-(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-; make horizontal movement cross lines
-(setq-default evil-cross-lines t)
+;; ;; -- move through softwrapped lines naturally
+;; ;;    https://stackoverflow.com/a/20899418/269247
+;; (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+;; (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+;; (define-key evil-motion-state-map (kbd "<remap> <evil-first-non-blank>") 'evil-first-non-blank-of-visual-line)
+;; (define-key evil-motion-state-map (kbd "<remap> <evil-digit-argument-or-evil-beginning-of-line>") 'evil-beginning-of-visual-line)
+;; (define-key evil-motion-state-map (kbd "<remap> <evil-end-of-line>") 'evil-end-of-visual-line)
+;; ;; ;; make horizontal movement cross lines
+;; ;; (setq-default evil-cross-lines t)
+;; ;; ;; Make display suitable for visual line mode
+;; ;; (setq-default global-visual-line-mode t)
+;; ;; ;; Show linebreaks
+;; ;; (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
-;; Hangul when toggled
+;; ;; Hangul when toggled
 (setq default-input-method "korean-hangul")
 ;; Set toggle key
 (global-set-key (kbd "s-SPC") 'toggle-input-method)
@@ -300,8 +310,8 @@
 (require 'midnight)
 
 ;;kill buffers if they were last disabled more than this seconds ago
-(setq clean-buffer-list-delay-general 14) ; will clean after 7 days
-(setq clean-buffer-list-delay-special (* 14 (* 24 3600))) ;basically 7 days
+(setq clean-buffer-list-delay-general 5) ; will clean after 5 days
+(setq clean-buffer-list-delay-special (* 5 (* 24 3600))) ;basically5 days
 ;; (setq clean-buffer-list-delay-special 2) ;basically 3 days
 
 (defvar clean-buffer-list-timer nil
@@ -438,7 +448,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (add-hook 'write-file-hooks 'auto-update-file-header)
 
 ;; Change copyright notice to my lab
-(setq header-copyright-notice "Copyright (C), EPFL Computer Vision Lab.\n")
+(setq header-copyright-notice "Copyright (C), Visual Computing Group @ University of Victoria.\n")
 
 ;; Header stylings
 (setq make-header-hook '(
@@ -453,17 +463,17 @@ You can disable 'clean-buffer-list' by (cancel-timer
 			 header-creation-date
 			 ;; header-rcs-id
 			 header-version
-			 header-pkg-requires
+			 ;; header-pkg-requires
 			 ;; header-sccs
 			 ;; header-modification-date
 			 ;; header-modification-author
 			 ;; header-update-count
-			 header-url
-			 header-doc-url
-			 header-keywords
-			 header-compatibility
-			 header-blank
-			 header-lib-requires
+			 ;; header-url
+			 ;; header-doc-url
+			 ;; header-keywords
+			 ;; header-compatibility
+			 ;; header-blank
+			 ;; header-lib-requires
 			 header-end-line
 			 header-commentary
 			 header-blank
@@ -532,6 +542,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(add-hook 'LaTeX-mode-hook 'turn-off-auto-fill)
 (setq reftex-plug-into-AUCTeX t)
 
 ;; ;; set default justification as full for latex mode
@@ -588,6 +599,11 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; Magit
 ;; ============================================================================
 (require 'magit)
+
+;; Get ssh-agent if it's there!
+(require 'exec-path-from-shell)
+(exec-path-from-shell-copy-env "SSH_AGENT_PID")
+(exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
 
 ;; (setq magit-display-buffer-function (quote display-buffer)) ;buffer display settings
 ;; (setq magit-status-buffer-switch-function 'switch-to-buffer) ;magit settings
@@ -767,8 +783,16 @@ You can disable 'clean-buffer-list' by (cancel-timer
             (local-set-key (kbd "C-c y")
                            'py-yapf-buffer)))
 
+(require 'python-black)
+;; (add-hook 'python-mode-hook 'python-black-on-save-mode) ; run yapf on save
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c b")
+                           'python-black-buffer)))
+
 (require 'py-isort)
 ;; (add-hook 'before-save-hook 'py-isort-before-save) 
+(setq python-black-extra-args '("-l 79"))
 (add-hook 'python-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c i")
@@ -815,72 +839,30 @@ You can disable 'clean-buffer-list' by (cancel-timer
 	   '(("\\.cmake\\'" . cmake-mode))
 	   auto-mode-alist))
 
+;; ;; ============================================================================
+;; ;; OSX
+;; ;; ============================================================================
+;; ;; From http://allkindsofrandomstuff.blogspot.com/2009/09/sharing-mac-clipboard-with-emacs.html
+;; (defun copy-from-osx ()
+;;   (shell-command-to-string "pbpaste"))
+
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil)) 
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
+
+;; Use X Clip to copy to system clipboard
+(xclip-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#151610" "#F92672" "#A6E22E" "#E6DB74" "#66D9EF" "#FD5FF0" "#A1EFE4" "#F8F8F2"])
- '(compilation-message-face (quote default))
- '(custom-safe-themes
-   (quote
-    ("69a22b13266d3fd085dbee88950f2789b7a73a2ed89a59ffc70d71709d89da66" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default)))
- '(fci-rule-color "#3E3D31")
- '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
- '(highlight-tail-colors
-   (quote
-    (("#3E3D31" . 0)
-     ("#67930F" . 20)
-     ("#349B8D" . 30)
-     ("#21889B" . 50)
-     ("#968B26" . 60)
-     ("#A45E0A" . 70)
-     ("#A41F99" . 85)
-     ("#3E3D31" . 100))))
- '(magit-diff-use-overlays nil)
  '(package-selected-packages
    (quote
-    (color-theme-solarized company-lua lua-mode anaconda-mode cmake-mode company-c-headers company-anaconda company-auctex company-math company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip)))
- '(pos-tip-background-color "#A6E22E")
- '(pos-tip-foreground-color "#151610")
- '(safe-local-variable-values
-   (quote
-    ((eval when
-	   (fboundp
-	    (quote aggressive-indent-mode))
-	   (aggressive-indent-mode -1))
-     (eval when
-	   (fboundp
-	    (quote rainbow-mode))
-	   (rainbow-mode 1))
-     (header-auto-update-enabled))))
- '(solarized-termcolors 256)
- '(vc-annotate-background nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#F92672")
-     (40 . "#CF4F1F")
-     (60 . "#C26C0F")
-     (80 . "#E6DB74")
-     (100 . "#AB8C00")
-     (120 . "#A18F00")
-     (140 . "#989200")
-     (160 . "#8E9500")
-     (180 . "#A6E22E")
-     (200 . "#729A1E")
-     (220 . "#609C3C")
-     (240 . "#4E9D5B")
-     (260 . "#3C9F79")
-     (280 . "#A1EFE4")
-     (300 . "#299BA6")
-     (320 . "#2896B5")
-     (340 . "#2790C3")
-     (360 . "#66D9EF"))))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   (unspecified "#151610" "#3E3D31" "#A20C41" "#F92672" "#67930F" "#A6E22E" "#968B26" "#E6DB74" "#21889B" "#66D9EF" "#A41F99" "#FD5FF0" "#349B8D" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
+    (python-black anaconda-mode cmake-mode color-theme-solarized company-c-headers company-anaconda company-auctex company-math company-lua company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit exec-path-from-shell flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize lua-mode magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
