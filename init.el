@@ -24,7 +24,6 @@
 
 ;; List of packages to install
 (defvar my-base-packages '(anaconda-mode cmake-mode
-					 color-theme-solarized
 					 company-c-headers
 					 company-anaconda
 					 company-auctex company-math
@@ -33,7 +32,7 @@
 					 evil-magit evil-escape
 					 evil-multiedit
 					 exec-path-from-shell
-					 flycheck-pyflakes header2
+					 flycheck-pyflakes
 					 helm helm-company
 					 helm-projectile
 					 helm-flycheck htmlize
@@ -443,9 +442,9 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; ============================================================================
 ;; Auto Headers
 ;; ============================================================================
-(require 'header2)
-(autoload 'auto-update-file-header "header2")
-(add-hook 'write-file-hooks 'auto-update-file-header)
+;;(require 'header2)
+;;(autoload 'auto-update-file-header "header2")
+;;(add-hook 'write-file-hooks 'auto-update-file-header)
 
 ;; Change copyright notice to my lab
 (setq header-copyright-notice "Copyright (C), Visual Computing Group @ University of Victoria.\n")
@@ -862,7 +861,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (python-black anaconda-mode cmake-mode color-theme-solarized company-c-headers company-anaconda company-auctex company-math company-lua company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit exec-path-from-shell flycheck-pyflakes header2 helm helm-company helm-projectile helm-flycheck htmlize lua-mode magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip))))
+    (python-black anaconda-mode cmake-mode color-theme-solarized company-c-headers company-anaconda company-auctex company-math company-lua company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit exec-path-from-shell flycheck-pyflakes helm helm-company helm-projectile helm-flycheck htmlize lua-mode magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
