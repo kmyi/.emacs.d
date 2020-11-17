@@ -442,9 +442,9 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; ============================================================================
 ;; Auto Headers
 ;; ============================================================================
-;;(require 'header2)
-;;(autoload 'auto-update-file-header "header2")
-;;(add-hook 'write-file-hooks 'auto-update-file-header)
+(require 'header2)
+(autoload 'auto-update-file-header "header2")
+(add-hook 'write-file-hooks 'auto-update-file-header)
 
 ;; Change copyright notice to my lab
 (setq header-copyright-notice "Copyright (C), Visual Computing Group @ University of Victoria.\n")
