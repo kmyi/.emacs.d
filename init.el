@@ -24,6 +24,7 @@
 
 ;; List of packages to install
 (defvar my-base-packages '(anaconda-mode cmake-mode
+					 conda
 					 company-c-headers
 					 company-anaconda
 					 company-auctex company-math
@@ -102,6 +103,10 @@
 ;; Basic Emacs Settings
 ;; ============================================================================
 
+;; Undo tree
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 ;; Comment line
 (global-set-key (kbd "C-x ;") 'comment-line)
 
@@ -109,6 +114,7 @@
 (require 'evil)
 (evil-mode 1)
 (setq evil-want-fine-undo t)
+(setq evil-undo-system "undo-tree")
 
 ;; Set m as an escape key
 (define-key evil-normal-state-map "m" nil)
@@ -733,6 +739,7 @@ You can disable 'clean-buffer-list' by (cancel-timer
 
 ;; (setq python-shell-interpreter "python")
 
+(define-coding-system-alias 'UTF-8 'utf-8)
 
 ;; For python-environment
 (require 'python-environment)
@@ -762,7 +769,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
 (define-key evil-normal-state-map "mgg" 'anaconda-mode-find-definitions)
 (define-key evil-normal-state-map "mga" 'anaconda-mode-find-assignments)
 (define-key evil-normal-state-map "mgr" 'anaconda-mode-find-references)
-(define-key evil-normal-state-map "mGG" 'evil-jump-backward)
+;; (define-key evil-normal-state-map "mGG" 'evil-jump-backward)
+(define-key evil-normal-state-map "mGG" 'xref-pop-marker-stack)
 
 (require 'flycheck)
 (add-hook 'python-mode-hook 'flycheck-mode)
@@ -796,6 +804,10 @@ You can disable 'clean-buffer-list' by (cancel-timer
           (lambda ()
             (local-set-key (kbd "C-c i")
                            'py-isort-buffer)))
+
+(require 'conda)
+(setq conda-anaconda-home (expand-file-name "~/Anaconda3"))
+(setq conda-env-home-directory (expand-file-name "~/Anaconda3"))
 
 ;; ============================================================================
 ;; Themes
@@ -860,8 +872,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (python-black anaconda-mode cmake-mode color-theme-solarized company-c-headers company-anaconda company-auctex company-math company-lua company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit exec-path-from-shell flycheck-pyflakes helm helm-company helm-projectile helm-flycheck htmlize lua-mode magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip))))
+   '(undo-tree python-black anaconda-mode cmake-mode color-theme-solarized company-c-headers company-anaconda company-auctex company-math company-lua company-web dumb-jump evil-tutor evil evil-magit evil-escape evil-multiedit exec-path-from-shell flycheck-pyflakes helm helm-company helm-projectile helm-flycheck htmlize lua-mode magit matlab-mode markdown-mode monokai-theme nlinum projectile-codesearch py-autopep8 py-isort python-environment pyvenv py-yapf rainbow-mode yaml-mode yasnippet xclip))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
