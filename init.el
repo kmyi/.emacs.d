@@ -114,7 +114,8 @@
 (require 'evil)
 (evil-mode 1)
 (setq evil-want-fine-undo t)
-(setq evil-undo-system "undo-tree")
+;; (setq evil-undo-system "undo-tree")
+(evil-set-undo-system 'undo-tree)
 
 ;; Set m as an escape key
 (define-key evil-normal-state-map "m" nil)
