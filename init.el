@@ -30,7 +30,7 @@
 					 company-auctex company-math
 					 company-lua company-web
 					 dumb-jump evil-tutor evil
-					 evil-magit evil-escape
+					 evil-collection evil-escape
 					 evil-multiedit
 					 exec-path-from-shell
 					 flycheck-pyflakes
@@ -44,7 +44,7 @@
 					 py-autopep8 py-isort
 					 python-environment pyvenv
 					 python-black
-					 py-yapf rainbow-mode
+					 py-yapf rainbow-mode undo-tree
 					 yaml-mode yasnippet xclip)
   "A list of packages to ensure are installed at launch.")
 
@@ -55,8 +55,8 @@
 (require 'cl)
 (defun my-base-packages-installed-p ()
   (cl-loop for p in my-base-packages
-        when (not (package-installed-p p)) do (return nil)
-        finally (return t)))
+        when (not (package-installed-p p)) do (cl-return nil)
+        finally (cl-return t)))
 
 (unless (my-base-packages-installed-p)
   ;; check for new packages (package versions)
@@ -380,7 +380,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
 ;; HELM
 ;; ============================================================================
 
-(require 'helm-config)
+;; (require 'helm-config)
+(require 'helm)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
@@ -807,8 +808,8 @@ You can disable 'clean-buffer-list' by (cancel-timer
                            'py-isort-buffer)))
 
 (require 'conda)
-(setq conda-anaconda-home (expand-file-name "~/Anaconda3"))
-(setq conda-env-home-directory (expand-file-name "~/Anaconda3"))
+(setq conda-anaconda-home "/Users/kmyi/miniconda3")
+(setq conda-env-home-directory "/Users/kmyi/miniconda3")
 
 ;; ============================================================================
 ;; Themes
